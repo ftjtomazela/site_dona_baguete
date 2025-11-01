@@ -116,10 +116,30 @@
             box-shadow: 0 12px 32px rgba(212, 160, 33, 0.3);
         }
         
+        /* =============================================== */
+        /* ⭐ DESTAQUE COM ANIMAÇÃO DE PULSAR ⭐ */
+        /* =============================================== */
         .product-card.friday-special {
             border: 2px solid #ffc107;
             box-shadow: 0 8px 32px rgba(255, 193, 7, 0.4);
+            animation: pulse-special 1.5s infinite;
         }
+
+        @keyframes pulse-special {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 8px 32px rgba(255, 193, 7, 0.4);
+            }
+            50% {
+                transform: scale(1.02); /* Levemente maior */
+                box-shadow: 0 12px 40px rgba(255, 193, 7, 0.6); /* Sombra mais forte */
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 8px 32px rgba(255, 193, 7, 0.4);
+            }
+        }
+        /* =============================================== */
 
         .product-image {
             background-color: #374151;
@@ -1021,8 +1041,11 @@
         // CHAVE GERAL DA LOJA: Mude para 'false' para fechar a loja imediatamente (ex: acabou o pão).
         var estoqueDisponivel = true;
 
+        // ===============================================
+        //     ⭐ LANCHE DE SÁBADO COM URGÊNCIA ⭐
+        // ===============================================
         var lanches = [
-            { id: 5, nome: '⭐ ESPECIAL DE SEXTA: TOSCANA', descricao: 'Linguiça toscana suculenta, rúcula fresca, queijo (prato ou mussarela) e tomate no pão baguete.', preco: 24.90, imagem: 'toscana.png', tipo: 'lanche', ingredientesBase: ['queijo', 'rucula', 'tomate'], apenasSexta: true },
+            { id: 5, nome: '🔥 SÓ HOJE: TOSCANA RÚCULA', descricao: 'Aproveite! Edição limitada da nossa famosa baguete de linguiça toscana com rúcula, Tomate e queijo. Peça já, é só hoje!', preco: 24.90, imagem: 'toscana.png', tipo: 'lanche', ingredientesBase: ['queijo', 'rucula', 'tomate'], diasEspeciais: [5, 6] }, // Aparece Sexta (5) e Sábado (6)
             { id: 1, nome: 'CLÁSSICO PERNIL', descricao: 'Pernil desfiado no tempero da casa, queijo prato ou mussarela derretido, salada de repolho crocante, vinagrete de tomate e cebola, maionese no pão baguete.', preco: 19.90, imagem: 'pernil.png', tipo: 'lanche', ingredientesBase: ['queijo', 'repolho-maionese', 'tomate', 'maionese'] },
             { id: 2, nome: 'FRANGO CREMOSO', descricao: 'Frango desfiado temperado, Catupiry original cremoso, bacon, vinagrete de tomate e cebola no pão baguete.', preco: 21.90, imagem: 'frango.png', tipo: 'lanche', ingredientesBase: ['catupiry', 'bacon', 'tomate'] },
             { id: 3, nome: 'COSTELA ESPECIAL', descricao: 'Costela bovina desfiada e suculenta, queijo prato ou mussarela derretido, molho barbecue, vinagrete de tomate e cebola no pão baguete.', preco: 21.90, imagem: 'costela.png', tipo: 'lanche', ingredientesBase: ['queijo', 'tomate'] },
@@ -1074,20 +1097,31 @@
         const database = firebase.database();
 
         
+        // ===============================================
+        //     ⭐ FUNÇÃO renderLanches ATUALIZADA ⭐
+        // ===============================================
         function renderLanches() {
-            const hoje = new Date().getDay(); // 0 = Domingo, 5 = Sexta
-            const ehSexta = (hoje === 5);
+            const hoje = new Date().getDay(); // 0=Dom, 5=Sex, 6=Sab
             var html = '';
             
             lanches.forEach(lanche => {
                 
-                if (lanche.apenasSexta && !ehSexta) {
-                    return; 
+                let mostrarLanche = true;
+                // Se o lanche tem 'diasEspeciais' definidos...
+                if (lanche.diasEspeciais && lanche.diasEspeciais.length > 0) {
+                    // ...verifique se HOJE é um desses dias. Se NÃO for, pule o lanche.
+                    if (!lanche.diasEspeciais.includes(hoje)) {
+                        mostrarLanche = false;
+                    }
                 }
                 
-                const classeEspecial = lanche.apenasSexta ? 'friday-special' : '';
+                if (!mostrarLanche) {
+                    return; // Pula este lanche
+                }
+                
+                // Adiciona a classe de destaque se for um dia especial
+                const classeEspecial = (lanche.diasEspeciais && lanche.diasEspeciais.includes(hoje)) ? 'friday-special' : ''; 
 
-                // Voltamos para 'contain'
                 html += `<div class="product-card ${classeEspecial}">
                     <div class="product-image" style="background-image: url('${lanche.imagem}'); background-size: contain; background-position: center; background-repeat: no-repeat;"></div>
                     <div class="product-info">
@@ -1111,7 +1145,6 @@
                     ? `openSaborModal(${bebida.id})`
                     : `addProdutoDiretoAoCarrinho(${bebida.id}, 'bebida')`;
 
-                // Voltamos para 'contain'
                 html += `<div class="product-card">
                     <div class="product-image" style="background-image: url('${bebida.imagem}'); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
                     <div class="product-info">
@@ -1406,9 +1439,6 @@
             updateCartTotal();
         }
 
-        // ===============================================
-        //     FUNÇÃO 'enviarPedido' ATUALIZADA
-        // ===============================================
         function enviarPedido() {
             // 1. Validar Itens
             if (cart.length === 0) {
@@ -1489,10 +1519,6 @@
                 status: 'Pendente', 
                 hora: new Date().toISOString() 
             };
-
-            // ===============================================
-            //     ⭐ MUDANÇA AQUI: WHATSAPP ABRE PRIMEIRO
-            // ===============================================
             
             // 7. Preparar WhatsApp e Abrir (ANTES de enviar ao DB para evitar pop-up block)
             let msgZap = '';
@@ -1535,8 +1561,6 @@
                     updateCart();
                     toggleCart(); 
                     
-                    // O WhatsApp JÁ FOI ABERTO, não precisa mais
-                    
                     checkoutBtn.disabled = false; 
                     checkoutBtn.textContent = '✅ Finalizar e Enviar Pedido';
 
@@ -1573,9 +1597,6 @@
             var hora = agora.getHours();
             var diasAbertos = [4, 5, 6, 0]; // Quinta, Sexta, Sábado, Domingo
             var horarioAberto = hora >= 10; // Abre às 10h
-            
-            // ** FORÇAR ABERTURA PARA TESTES (COMENTE A LINHA ABAIXO EM PRODUÇÃO) **
-            // return true; 
             
             const isAberto = diasAbertos.includes(dia) && horarioAberto;
             
