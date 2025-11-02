@@ -25,9 +25,8 @@
             border-bottom: 2px solid #d4a021;
             padding-bottom: 20px;
         }
-        /* Estilo para seu logo (opcional) */
         .header img {
-            max-width: 200px; /* Ajuste o tamanho do seu logo */
+            max-width: 200px; 
             margin-bottom: 10px;
         }
         .header h1 {
@@ -57,7 +56,7 @@
             border-radius: 16px;
             padding: 20px;
             display: flex;
-            align-items: center; /* Alinha verticalmente */
+            align-items: center; 
             gap: 15px;
             border: 2px solid #374151;
             transition: all 0.3s;
@@ -66,7 +65,6 @@
             border-color: #d4a021;
         }
         
-        /* CSS PARA A IMAGEM DO LANCHE */
         .item-img {
             width: 80px;
             height: 80px;
@@ -284,6 +282,30 @@
         </div>
     </div>
     
+    <div class="modal" id="bebida-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="bebida-modal-title">Escolha o Sabor</div>
+                <button class="close-btn" onclick="closeBebidaModal()">✕ Fechar</button>
+            </div>
+            <div class="modal-body">
+                <div class="options-section">
+                    <div class="options-title">🥤 Sabores Disponíveis</div>
+                    <div id="sabores-container">
+                        </div>
+                </div>
+                <div class="options-section">
+                    <div class="options-title">📝 Observações</div>
+                    <textarea id="obs-bebida" rows="3" placeholder="Alguma observação?"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeBebidaModal()">Cancelar</button>
+                <button class="confirm-btn" onclick="addBebidaFromModal()">Adicionar ao Pedido</button>
+            </div>
+        </div>
+    </div>
+    
     <div class="modal" id="cart-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -377,13 +399,11 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
         import { getDatabase, ref, push, get } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-database.js";
 
-        // SUA MESMA CONFIGURAÇÃO
+        // SUA MESMA CONFIGURAÇÃO (com a URL do database correta)
         const firebaseConfig = {
             apiKey: "AIzaSyAQTm3cL26REQloN8AFP28gwsIUzYz73og",
             authDomain: "dona-baguete-kds.firebaseapp.com",
-            // ⭐⭐⭐ A CORREÇÃO ESTÁ AQUI ⭐⭐⭐
-            databaseURL: "https://dona-baguete-kds-default-rtdb.firebaseio.com", // Estava 'bagete'
-            // ⭐⭐⭐ FIM DA CORREÇÃO ⭐⭐⭐
+            databaseURL: "https://dona-baguete-kds-default-rtdb.firebaseio.com", 
             projectId: "dona-baguete-kds",
             storageBucket: "dona-baguete-kds.firebasestorage.app",
             messagingSenderId: "307283406823",
@@ -394,7 +414,7 @@
         // Inicializa o App e o Database
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
-        const pedidosRef = ref(database, 'pedidos'); // Onde os pedidos finalizados serão salvos
+        const pedidosRef = ref(database, 'pedidos'); 
         
         // --- INÍCIO DO NOVO BLOCO DE CARDÁPIO (Firebase) ---
 
@@ -492,6 +512,7 @@
         // =======================================================
         var cart = [];
         var currentLanche = null;
+        var currentBebida = null; // ⭐ Variável para o modal de bebida
         var freteAtual = 0;
         
         // =======================================================
@@ -508,12 +529,12 @@
             }
             
             lanches.forEach(lanche => {
-                // NOVO: Cria a tag de imagem SÓ SE o campo 'imagem' existir
                 const imagemHTML = lanche.imagem ? `<img src="${lanche.imagem}" alt="${lanche.nome}" class="item-img">` : '';
 
                 const itemHTML = `
                     <div class="menu-item">
-                        ${imagemHTML} <div class="item-info">
+                        ${imagemHTML} 
+                        <div class="item-info">
                             <span class="nome">${lanche.nome}</span>
                             <p class="descricao">${lanche.descricao || ''}</p>
                             <span class="preco">R$ ${Number(lanche.preco).toFixed(2)}</span>
@@ -525,6 +546,7 @@
             });
         }
         
+        // ⭐ FUNÇÃO RENDERIZAR BEBIDAS ATUALIZADA
         function renderizarBebidas() {
             const container = document.getElementById('bebidas-container');
             container.innerHTML = ''; 
@@ -535,33 +557,33 @@
             }
 
             bebidas.forEach(bebida => {
-                // Não vamos adicionar imagens para bebidas por enquanto, mas o lanche.imagem serve de exemplo
+                const imagemHTML = bebida.imagem ? `<img src="${bebida.imagem}" alt="${bebida.nome}" class="item-img">` : '';
+                
+                let buttonOnClick;
+                let descricaoHTML = '';
+
+                // Verifica se tem sabores
                 if (bebida.sabores && bebida.sabores.length > 0) {
-                    bebida.sabores.forEach(sabor => {
-                        const nomeCompleto = `${bebida.nome} - ${sabor}`;
-                        const itemHTML = `
-                            <div class="menu-item">
-                                <div class="item-info">
-                                    <span class="nome">${nomeCompleto}</span>
-                                    <span class="preco">R$ ${Number(bebida.preco).toFixed(2)}</span>
-                                </div>
-                                <button class="btn-add" onclick="addBebidaToCart('${bebida.id}', '${sabor}')">+</button>
-                            </div>
-                        `;
-                        container.innerHTML += itemHTML;
-                    });
+                    // Se tiver, o botão abre o modal de bebidas
+                    buttonOnClick = `openBebidaModal('${bebida.id}')`;
+                    // E a descrição lista os sabores
+                    descricaoHTML = `<p class="descricao">${bebida.sabores.join(', ')}</p>`;
                 } else {
-                    const itemHTML = `
-                        <div class="menu-item">
-                            <div class="item-info">
-                                <span class="nome">${bebida.nome}</span>
-                                <span class="preco">R$ ${Number(bebida.preco).toFixed(2)}</span>
-                            </div>
-                            <button class="btn-add" onclick="addBebidaToCart('${bebida.id}', null)">+</button>
-                        </div>
-                    `;
-                    container.innerHTML += itemHTML;
+                    // Se não tiver, o botão adiciona direto ao carrinho
+                    buttonOnClick = `addBebidaToCart('${bebida.id}', null)`;
                 }
+
+                const itemHTML = `
+                    <div class="menu-item">
+                        ${imagemHTML} 
+                        <div class="item-info">
+                            <span class="nome">${bebida.nome}</span>
+                            ${descricaoHTML} <span class="preco">R$ ${Number(bebida.preco).toFixed(2)}</span>
+                        </div>
+                        <button class="btn-add" onclick="${buttonOnClick}">+</button>
+                    </div>
+                `;
+                container.innerHTML += itemHTML;
             });
         }
 
@@ -575,7 +597,6 @@
             document.getElementById('modal-title').textContent = currentLanche.nome;
             document.getElementById('observacao').value = '';
 
-            // Lógica do Queijo (Atualizada)
             const queijoSection = document.getElementById('tipo-queijo-section');
             const lancheTemQueijo = currentLanche.ingredientesBase && currentLanche.ingredientesBase.includes('queijo');
             
@@ -589,11 +610,9 @@
                 queijoSection.style.display = 'none';
             }
             
-            // Adicionais
             var adicionaisHTML = adicionais.map(ad => `<div class="option-item"><input type="checkbox" class="adicional-check" onchange="updateModalTotal()" data-preco="${ad.preco}" data-nome="${ad.nome}"><span class="option-label">${ad.nome}</span><span class="option-price">+ R$ ${ad.preco.toFixed(2)}</span></div>`).join('');
             document.getElementById('adicionais-container').innerHTML = adicionaisHTML;
 
-            // Remoções (Atualizado)
             const ingredientesLanche = currentLanche.ingredientesBase || [];
             const remocoesDisponiveis = remocoes.filter(rem => ingredientesLanche.includes(rem.ingredienteId));
             const remocoesSection = document.getElementById('remocoes-section');
@@ -634,7 +653,7 @@
             }
 
             cart.push({
-                cartId: Date.now(), // ID único para o carrinho
+                cartId: Date.now(), 
                 tipo: 'lanche',
                 nome: currentLanche.nome,
                 preco: currentLanche.preco,
@@ -654,18 +673,57 @@
         //     LÓGICA DE ADICIONAR BEBIDAS
         // =======================================================
         
-        function addBebidaToCart(bebidaId, sabor) {
+        // ⭐ NOVAS FUNÇÕES PARA O MODAL DE BEBIDA
+        function openBebidaModal(bebidaId) {
+            currentBebida = bebidas.find(b => b.id === bebidaId);
+            document.getElementById('bebida-modal-title').textContent = currentBebida.nome;
+            document.getElementById('obs-bebida').value = '';
+            
+            const saboresContainer = document.getElementById('sabores-container');
+            saboresContainer.innerHTML = currentBebida.sabores.map((sabor, index) => `
+                <div class="option-item">
+                    <input type="radio" name="sabor-bebida" value="${sabor}" id="sabor-${index}" ${index === 0 ? 'checked' : ''}>
+                    <label for="sabor-${index}" class="option-label">${sabor}</label>
+                </div>
+            `).join('');
+            
+            document.getElementById('bebida-modal').classList.add('active');
+        }
+        
+        function closeBebidaModal() {
+            document.getElementById('bebida-modal').classList.remove('active');
+        }
+        
+        function addBebidaFromModal() {
+            const saborSelecionado = document.querySelector('input[name="sabor-bebida"]:checked');
+            if (!saborSelecionado) {
+                alert("Por favor, selecione um sabor.");
+                return;
+            }
+            
+            const sabor = saborSelecionado.value;
+            const observacao = document.getElementById('obs-bebida').value;
+            
+            // Chama a função original de adicionar, mas com os detalhes
+            addBebidaToCart(currentBebida.id, sabor, observacao);
+            
+            closeBebidaModal();
+        }
+
+        // ⭐ FUNÇÃO ADDBEBIDATOCART ATUALIZADA
+        function addBebidaToCart(bebidaId, sabor, observacao = null) {
             const bebida = bebidas.find(b => b.id === bebidaId);
             const nomeCompleto = sabor ? `${bebida.nome} - ${sabor}` : bebida.nome;
             
             cart.push({
                 cartId: Date.now(),
                 tipo: 'bebida',
-                nome: nomeCompleto,
+                nome: bebida.nome, // Salva o nome base
                 preco: bebida.preco,
                 precoTotal: bebida.preco,
                 quantidade: 1,
-                sabor: sabor || null
+                sabor: sabor, // Salva o sabor
+                observacao: observacao // Salva a observação
             });
             updateCart();
         }
@@ -688,6 +746,7 @@
             updateCart();
         }
 
+        // ⭐ FUNÇÃO UPDATECART ATUALIZADA
         function updateCart() {
             const cartContainer = document.getElementById('cart-items-container');
             document.getElementById('cart-count').textContent = cart.length;
@@ -698,15 +757,26 @@
                 cartContainer.innerHTML = '';
                 cart.forEach(item => {
                     let details = '';
-                    if (item.queijo) details += `<div>🧀 ${item.queijo}</div>`;
-                    if (item.adicionais && item.adicionais.length > 0) details += `<div>➕ ${item.adicionais.map(ad => ad.nome).join(', ')}</div>`;
-                    if (item.remocoes && item.remocoes.length > 0) details += `<div>➖ ${item.remocoes.map(rem => rem.nome).join(', ')}</div>`;
+                    let nomeDisplay = item.nome;
+                    
+                    if (item.tipo === 'lanche') {
+                        if (item.queijo) details += `<div>🧀 ${item.queijo}</div>`;
+                        if (item.adicionais && item.adicionais.length > 0) details += `<div>➕ ${item.adicionais.map(ad => ad.nome).join(', ')}</div>`;
+                        if (item.remocoes && item.remocoes.length > 0) details += `<div>➖ ${item.remocoes.map(rem => rem.nome).join(', ')}</div>`;
+                    }
+                    
+                    if (item.tipo === 'bebida') {
+                        if (item.sabor) {
+                            nomeDisplay = `${item.nome} - ${item.sabor}`;
+                        }
+                    }
+                    
                     if (item.observacao) details += `<div>📝 ${item.observacao}</div>`;
-
+                    
                     cartContainer.innerHTML += `
                         <div class="cart-item">
                             <div class="cart-item-info">
-                                <div class="cart-item-nome">${item.quantidade}x ${item.nome}</div>
+                                <div class="cart-item-nome">${item.quantidade}x ${nomeDisplay}</div>
                                 <div class="cart-item-detalhes">${details}</div>
                             </div>
                             <div class="cart-item-preco">R$ ${item.precoTotal.toFixed(2)}</div>
@@ -751,7 +821,6 @@
             submitBtn.disabled = true;
             submitBtn.textContent = 'Enviando...';
             
-            // 1. Validar Itens
             if (cart.length === 0) {
                 alert('Seu carrinho está vazio!');
                 submitBtn.disabled = false;
@@ -759,15 +828,12 @@
                 return;
             }
             
-            // 2. Coletar Dados do Cliente
             const clienteNome = document.getElementById('cliente-nome').value;
             let clienteWhatsApp = document.getElementById('cliente-whatsapp').value.replace(/\D/g, '');
-            // Adiciona 55 (Brasil) se não tiver
             if (clienteWhatsApp.length < 12) {
                  clienteWhatsApp = "55" + clienteWhatsApp;
             }
             
-            // 3. Coletar Dados de Entrega
             const localidade = document.getElementById('localidade').value;
             let enderecoCompleto = "Retirada no Local";
             if (localidade !== 'retirada') {
@@ -783,29 +849,19 @@
                 enderecoCompleto = `${rua}, ${numero} - ${bairro}`;
             }
 
-            // 4. Coletar Dados de Pagamento
             const pagamentoSelect = document.getElementById('pagamento');
             let metodoPagamento = pagamentoSelect.options[pagamentoSelect.selectedIndex].text;
             if (pagamentoSelect.value === 'dinheiro' && document.getElementById('troco-valor').value) {
                 metodoPagamento += ` (Troco para: R$ ${document.getElementById('troco-valor').value})`;
             }
 
-            // 5. Calcular Totais Finais
             var subtotal = cart.reduce((sum, item) => sum + item.precoTotal * item.quantidade, 0);
             var total = subtotal + freteAtual;
             
-            // 6. Montar Objeto do Pedido
             const pedidoCompleto = {
-                cliente: {
-                    nome: clienteNome,
-                    whatsapp: clienteWhatsApp 
-                },
+                cliente: { nome: clienteNome, whatsapp: clienteWhatsApp },
                 itens: cart,
-                entrega: {
-                    tipo: localidade, 
-                    endereco: enderecoCompleto,
-                    taxa: freteAtual
-                },
+                entrega: { tipo: localidade, endereco: enderecoCompleto, taxa: freteAtual },
                 pagamento: metodoPagamento,
                 subtotal: subtotal,
                 total: total,
@@ -813,11 +869,9 @@
                 hora: new Date().toISOString() 
             };
             
-            // 7. Enviar para o Firebase
             push(pedidosRef, pedidoCompleto)
                 .then(() => {
                     alert('Pedido enviado com sucesso! Entraremos em contato pelo WhatsApp em breve.');
-                    // Limpar tudo
                     cart = [];
                     form.reset();
                     updateCart();
@@ -842,14 +896,18 @@
         window.closeModal = closeModal;
         window.updateModalTotal = updateModalTotal;
         window.addLancheToCart = addLancheToCart;
+        
         window.addBebidaToCart = addBebidaToCart;
+        window.openBebidaModal = openBebidaModal; // ⭐ Novo
+        window.closeBebidaModal = closeBebidaModal; // ⭐ Novo
+        window.addBebidaFromModal = addBebidaFromModal; // ⭐ Novo
+        
         window.openCart = openCart;
         window.closeCart = closeCart;
         window.removeFromCart = removeFromCart;
         window.updateCart = updateCart;
         window.toggleTroco = toggleTroco;
         
-        // Carrega o cardápio do Firebase assim que o script rodar
         carregarCardapioDoFirebase();
 
     </script>
