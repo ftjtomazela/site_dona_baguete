@@ -25,6 +25,11 @@
             border-bottom: 2px solid #d4a021;
             padding-bottom: 20px;
         }
+        /* ⭐ Estilo para seu logo (opcional) */
+        .header img {
+            max-width: 200px; /* Ajuste o tamanho do seu logo */
+            margin-bottom: 10px;
+        }
         .header h1 {
             font-size: 2.5rem;
             font-weight: bold;
@@ -46,14 +51,13 @@
             .menu-container { grid-template-columns: 1fr 1fr; }
         }
 
-        /* --- ESTILOS DO ITEM DO CARDÁPIO --- */
+        /* --- ESTILOS DO ITEM DO CARDÁPIO (COM IMAGEM) --- */
         .menu-item {
             background: linear-gradient(145deg, #2d3748, #1a202c);
             border-radius: 16px;
             padding: 20px;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            align-items: center; /* Alinha verticalmente */
             gap: 15px;
             border: 2px solid #374151;
             transition: all 0.3s;
@@ -61,6 +65,17 @@
         .menu-item:hover {
             border-color: #d4a021;
         }
+        
+        /* ⭐ CSS PARA A IMAGEM DO LANCHE */
+        .item-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 2px solid #4b5563;
+            flex-shrink: 0;
+        }
+
         .item-info { flex: 1; }
         .item-info .nome {
             font-size: 1.3rem;
@@ -221,12 +236,12 @@
 
         <h2 class="menu-section-title">🔥 Lanches</h2>
         <div class="menu-container" id="lanches-container">
-            <p style="color:white; text-align:center; padding: 20px;">Carregando lanches...</p>
+            <p style='color:white; text-align:center; padding: 20px;'>Carregando lanches...</p>
         </div>
 
         <h2 class="menu-section-title">🥤 Bebidas</h2>
         <div class="menu-container" id="bebidas-container">
-            <p style="color:white; text-align:center; padding: 20px;">Carregando bebidas...</p>
+            <p style='color:white; text-align:center; padding: 20px;'>Carregando bebidas...</p>
         </div>
     </div>
 
@@ -366,7 +381,7 @@
         const firebaseConfig = {
             apiKey: "AIzaSyAQTm3cL26REQloN8AFP28gwsIUzYz73og",
             authDomain: "dona-baguete-kds.firebaseapp.com",
-            databaseURL: "https://dona-baguete-kds-default-rtdb.firebaseio.com", 
+            databaseURL: "https://dona-bagete-kds-default-rtdb.firebaseio.com", 
             projectId: "dona-baguete-kds",
             storageBucket: "dona-baguete-kds.firebasestorage.app",
             messagingSenderId: "307283406823",
@@ -413,18 +428,13 @@
                 if (lanchesSnap.exists()) {
                     lanchesSnap.forEach(child => {
                         const item = child.val();
+                        if (item.pausado) return; 
                         
-                        // 1. Não mostrar se estiver pausado
-                        if (item.pausado) return; // Pula este item
-                        
-                        // 2. Verificar dia especial
                         if (item.diasEspeciais && item.diasEspeciais.length > 0) {
                             if (!item.diasEspeciais.includes(hoje)) {
-                                return; // Pula este item, não é o dia certo
+                                return; 
                             }
                         }
-                        
-                        // 3. IMPORTANTE: O ID agora é a chave única do Firebase
                         item.id = child.key; 
                         lanches.push(item);
                     });
@@ -435,9 +445,9 @@
                 if (bebidasSnap.exists()) {
                     bebidasSnap.forEach(child => {
                         const item = child.val();
-                        if (item.pausado) return; // Pula item pausado
+                        if (item.pausado) return; 
                         
-                        item.id = child.key; // O ID é a chave única do Firebase
+                        item.id = child.key; 
                         bebidas.push(item);
                     });
                 }
@@ -457,7 +467,6 @@
         // =======================================================
         //     CARDÁPIO ANTIGO (HARDCODED) - SÓ PARA ADICIONAIS
         // =======================================================
-        // (Lanches e Bebidas foram movidos para o Firebase)
         
         var adicionais = [
             { id: 'bacon', nome: 'Bacon Extra', preco: 5.00 }, 
@@ -484,12 +493,12 @@
         var freteAtual = 0;
         
         // =======================================================
-        //     FUNÇÕES DE RENDERIZAÇÃO DO CARDÁPIO
+        //     FUNÇÕES DE RENDERIZAÇÃO DO CARDÁPIO (ATUALIZADAS)
         // =======================================================
 
         function renderizarLanches() {
             const container = document.getElementById('lanches-container');
-            container.innerHTML = ''; // Limpa o "Carregando..."
+            container.innerHTML = ''; 
             
             if (lanches.length === 0) {
                 container.innerHTML = "<p style='color:white; text-align:center; padding: 20px;'>Nenhum lanche disponível no momento.</p>";
@@ -497,9 +506,12 @@
             }
             
             lanches.forEach(lanche => {
+                // ⭐ NOVO: Cria a tag de imagem SÓ SE o campo 'imagem' existir
+                const imagemHTML = lanche.imagem ? `<img src="${lanche.imagem}" alt="${lanche.nome}" class="item-img">` : '';
+
                 const itemHTML = `
                     <div class="menu-item">
-                        <div class="item-info">
+                        ${imagemHTML} <div class="item-info">
                             <span class="nome">${lanche.nome}</span>
                             <p class="descricao">${lanche.descricao || ''}</p>
                             <span class="preco">R$ ${Number(lanche.preco).toFixed(2)}</span>
@@ -513,7 +525,7 @@
         
         function renderizarBebidas() {
             const container = document.getElementById('bebidas-container');
-            container.innerHTML = ''; // Limpa o "Carregando..."
+            container.innerHTML = ''; 
             
             if (bebidas.length === 0) {
                 container.innerHTML = "<p style='color:white; text-align:center; padding: 20px;'>Nenhuma bebida disponível no momento.</p>";
@@ -521,7 +533,7 @@
             }
 
             bebidas.forEach(bebida => {
-                // Se a bebida tiver sabores, cria um card para cada sabor
+                // Não vamos adicionar imagens para bebidas por enquanto, mas o lanche.imagem serve de exemplo
                 if (bebida.sabores && bebida.sabores.length > 0) {
                     bebida.sabores.forEach(sabor => {
                         const nomeCompleto = `${bebida.nome} - ${sabor}`;
@@ -537,7 +549,6 @@
                         container.innerHTML += itemHTML;
                     });
                 } else {
-                    // Se não tiver sabores, cria um card normal
                     const itemHTML = `
                         <div class="menu-item">
                             <div class="item-info">
@@ -557,7 +568,6 @@
         // =======================================================
         
         function openModal(lancheId) {
-            // Encontra o lanche no array global (agora pelo ID do Firebase)
             currentLanche = lanches.find(l => l.id === lancheId);
             
             document.getElementById('modal-title').textContent = currentLanche.nome;
@@ -565,7 +575,6 @@
 
             // Lógica do Queijo (Atualizada)
             const queijoSection = document.getElementById('tipo-queijo-section');
-            // Verifica se o lanche tem 'queijo' em seus ingredientes base
             const lancheTemQueijo = currentLanche.ingredientesBase && currentLanche.ingredientesBase.includes('queijo');
             
             if (lancheTemQueijo) {
