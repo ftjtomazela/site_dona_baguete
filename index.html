@@ -116,9 +116,6 @@
             box-shadow: 0 12px 32px rgba(212, 160, 33, 0.3);
         }
         
-        /* =============================================== */
-        /* ⭐ DESTAQUE COM ANIMAÇÃO DE PULSAR ⭐ */
-        /* =============================================== */
         .product-card.friday-special {
             border: 2px solid #ffc107;
             box-shadow: 0 8px 32px rgba(255, 193, 7, 0.4);
@@ -131,15 +128,14 @@
                 box-shadow: 0 8px 32px rgba(255, 193, 7, 0.4);
             }
             50% {
-                transform: scale(1.02); /* Levemente maior */
-                box-shadow: 0 12px 40px rgba(255, 193, 7, 0.6); /* Sombra mais forte */
+                transform: scale(1.02);
+                box-shadow: 0 12px 40px rgba(255, 193, 7, 0.6);
             }
             100% {
                 transform: scale(1);
                 box-shadow: 0 8px 32px rgba(255, 193, 7, 0.4);
             }
         }
-        /* =============================================== */
 
         .product-image {
             background-color: #374151;
@@ -939,7 +935,7 @@
                 <div class="location-options">
                      <label class="location-option">
                         <input type="radio" name="localidade" value="dentro" onchange="atualizarFrete()">
-                        <span>🛵 Em Conchas<br>(R$ 3,00)</span>
+                        <span>🛵 Em Conchas<br>(R$ 4,00)</span>
                     </label>
                     <label class="location-option">
                         <input type="radio" name="localidade" value="fora" onchange="atualizarFrete()">
@@ -1041,11 +1037,8 @@
         // CHAVE GERAL DA LOJA: Mude para 'false' para fechar a loja imediatamente (ex: acabou o pão).
         var estoqueDisponivel = true;
 
-        // ===============================================
-        //     ⭐ LANCHE DE SÁBADO COM URGÊNCIA ⭐
-        // ===============================================
         var lanches = [
-            { id: 5, nome: '🔥 SÓ HOJE: TOSCANA RÚCULA', descricao: 'Aproveite! Edição limitada da nossa famosa baguete de linguiça toscana com rúcula, Tomate e queijo. Peça já, é só hoje!', preco: 24.90, imagem: 'toscana.png', tipo: 'lanche', ingredientesBase: ['queijo', 'rucula', 'tomate'], diasEspeciais: [5, 6] }, // Aparece Sexta (5) e Sábado (6)
+            { id: 5, nome: '🔥 SÓ HOJE: LINGUIÇA TOSCANA', descricao: 'Aproveite! Edição limitada da nossa famosa baguete de linguiça toscana com rúcula e queijo. Peça já, é só hoje!', preco: 24.90, imagem: 'toscana.png', tipo: 'lanche', ingredientesBase: ['queijo', 'rucula', 'tomate'], diasEspeciais: [5, 6] }, // Aparece Sexta (5) e Sábado (6)
             { id: 1, nome: 'CLÁSSICO PERNIL', descricao: 'Pernil desfiado no tempero da casa, queijo prato ou mussarela derretido, salada de repolho crocante, vinagrete de tomate e cebola, maionese no pão baguete.', preco: 19.90, imagem: 'pernil.png', tipo: 'lanche', ingredientesBase: ['queijo', 'repolho-maionese', 'tomate', 'maionese'] },
             { id: 2, nome: 'FRANGO CREMOSO', descricao: 'Frango desfiado temperado, Catupiry original cremoso, bacon, vinagrete de tomate e cebola no pão baguete.', preco: 21.90, imagem: 'frango.png', tipo: 'lanche', ingredientesBase: ['catupiry', 'bacon', 'tomate'] },
             { id: 3, nome: 'COSTELA ESPECIAL', descricao: 'Costela bovina desfiada e suculenta, queijo prato ou mussarela derretido, molho barbecue, vinagrete de tomate e cebola no pão baguete.', preco: 21.90, imagem: 'costela.png', tipo: 'lanche', ingredientesBase: ['queijo', 'tomate'] },
@@ -1097,9 +1090,6 @@
         const database = firebase.database();
 
         
-        // ===============================================
-        //     ⭐ FUNÇÃO renderLanches ATUALIZADA ⭐
-        // ===============================================
         function renderLanches() {
             const hoje = new Date().getDay(); // 0=Dom, 5=Sex, 6=Sab
             var html = '';
@@ -1107,19 +1097,16 @@
             lanches.forEach(lanche => {
                 
                 let mostrarLanche = true;
-                // Se o lanche tem 'diasEspeciais' definidos...
                 if (lanche.diasEspeciais && lanche.diasEspeciais.length > 0) {
-                    // ...verifique se HOJE é um desses dias. Se NÃO for, pule o lanche.
                     if (!lanche.diasEspeciais.includes(hoje)) {
                         mostrarLanche = false;
                     }
                 }
                 
                 if (!mostrarLanche) {
-                    return; // Pula este lanche
+                    return;
                 }
                 
-                // Adiciona a classe de destaque se for um dia especial
                 const classeEspecial = (lanche.diasEspeciais && lanche.diasEspeciais.includes(hoje)) ? 'friday-special' : ''; 
 
                 html += `<div class="product-card ${classeEspecial}">
@@ -1419,7 +1406,7 @@
             const retiradaDiv = document.getElementById('retirada-info');
 
             if (selecao === 'dentro') {
-                freteAtual = 3.00;
+                freteAtual = 4.00;
                 enderecoDiv.style.display = 'block';
                 retiradaDiv.style.display = 'none';
             } else if (selecao === 'fora') {
@@ -1547,6 +1534,10 @@
                         localStorage.setItem('donabaguete_nome', clienteNome);
                         localStorage.setItem('donabaguete_whatsapp', clienteWhatsAppInput); 
                         
+                        // ===============================================
+                        //     ⭐ A CORREÇÃO ESTÁ AQUI ⭐
+                        // Só salvamos o endereço no localStorage se NÃO FOR retirada.
+                        // ===============================================
                         if (localidade.value !== 'retirada') {
                             localStorage.setItem('donabaguete_rua', rua);
                             localStorage.setItem('donabaguete_numero', numero);
