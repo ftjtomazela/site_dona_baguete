@@ -25,7 +25,7 @@
             border-bottom: 2px solid #d4a021;
             padding-bottom: 20px;
         }
-        /* ⭐ Estilo para seu logo (opcional) */
+        /* Estilo para seu logo (opcional) */
         .header img {
             max-width: 200px; /* Ajuste o tamanho do seu logo */
             margin-bottom: 10px;
@@ -66,7 +66,7 @@
             border-color: #d4a021;
         }
         
-        /* ⭐ CSS PARA A IMAGEM DO LANCHE */
+        /* CSS PARA A IMAGEM DO LANCHE */
         .item-img {
             width: 80px;
             height: 80px;
@@ -381,7 +381,9 @@
         const firebaseConfig = {
             apiKey: "AIzaSyAQTm3cL26REQloN8AFP28gwsIUzYz73og",
             authDomain: "dona-baguete-kds.firebaseapp.com",
-            databaseURL: "https://dona-bagete-kds-default-rtdb.firebaseio.com", 
+            // ⭐⭐⭐ A CORREÇÃO ESTÁ AQUI ⭐⭐⭐
+            databaseURL: "https://dona-baguete-kds-default-rtdb.firebaseio.com", // Estava 'bagete'
+            // ⭐⭐⭐ FIM DA CORREÇÃO ⭐⭐⭐
             projectId: "dona-baguete-kds",
             storageBucket: "dona-baguete-kds.firebasestorage.app",
             messagingSenderId: "307283406823",
@@ -506,7 +508,7 @@
             }
             
             lanches.forEach(lanche => {
-                // ⭐ NOVO: Cria a tag de imagem SÓ SE o campo 'imagem' existir
+                // NOVO: Cria a tag de imagem SÓ SE o campo 'imagem' existir
                 const imagemHTML = lanche.imagem ? `<img src="${lanche.imagem}" alt="${lanche.nome}" class="item-img">` : '';
 
                 const itemHTML = `
