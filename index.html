@@ -350,7 +350,7 @@
                             <select id="localidade" class="input-field" onchange="updateCart()" required>
                                 <option value="">Selecione...</option>
                                 <option value="retirada">Retirada no Local (Grátis)</option>
-                                <option value="dentro">Em Conchas (R$ 3,00)</option>
+                                <option value="dentro">Em Conchas (R$ 4,00)</option>
                                 <option value="fora">Fora de Conchas (R$ 10,00)</option>
                             </select>
                         </div>
@@ -793,7 +793,7 @@
                 freteAtual = 0.00;
                 enderecoDiv.style.display = 'none';
             } else {
-                freteAtual = (localidade === 'dentro') ? 3.00 : 10.00;
+                freteAtual = (localidade === 'dentro') ? 4.00 : 10.00;
                 enderecoDiv.style.display = 'grid';
             }
             
