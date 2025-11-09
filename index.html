@@ -323,6 +323,34 @@
             box-shadow: none;
             transform: none;
         }
+        /* --- PIX KEY GROUP --- */
+        .pix-key-group {
+            display: flex;
+            gap: 10px;
+            margin: 10px 0;
+            align-items: stretch;
+        }
+        .pix-key-group input {
+            flex-grow: 1;
+            cursor: default;
+        }
+        .pix-key-group button {
+            background: #d4a021;
+            color: #000;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .pix-instruction {
+            font-size: 0.9rem;
+            color: #f7d00b;
+            text-align: center;
+            padding: 5px 0;
+        }
+
 
         /* --- ESTILO DO RODAPÉ --- */
         footer {
@@ -508,7 +536,7 @@
                     </div>
 
                     <div id="payment-summary-block">
-                        <div id="cart-total-display">
+                        <div id="cart-total-display" class="modal-total">
                             <span class="total-label">TOTAL:</span>
                             <span class="total-price" id="cart-total-in-summary">R$ 0,00</span>
                         </div>
@@ -516,7 +544,7 @@
                         <div id="pix-info-section" style="display: none;">
                             <div class="pix-key-group">
                                 <input type="text" id="pix-key" class="input-field" value="" readonly>
-                                <button onclick="copyPixKey()">📋 Copiar Chave</button>
+                                <button type="button" onclick="copyPixKey()">📋 Copiar Chave</button>
                             </div>
                             <div class="pix-instruction">
                                 ⚠️ Após o pagamento, envie o comprovante pelo WhatsApp
@@ -550,7 +578,7 @@
         import { getDatabase, ref, push, get } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-database.js";
 
         // =======================================================
-        //             CONFIGURAÇÃO DA LOJA
+        //            CONFIGURAÇÃO DA LOJA (CONSTANTES)
         // =======================================================
         const firebaseConfig = {
             apiKey: "AIzaSyAQTm3cL26REQloN8AFP28gwsIUzYz73og", 
@@ -565,7 +593,7 @@
         
         const ENDERECO_LOJA = "Rua Romualdo Albino Balestrin, 35, CONCHAS, SP"; 
         const WHATSAPP_LOJA = "5514991718704";
-        const CHAVE_PIX = "14981244230";
+        const CHAVE_PIX = "14981244230"; // Chave PIX
         const CIDADE_FILTRO = "Conchas, SP, Brasil";
         // =======================================================
 
@@ -598,7 +626,7 @@
         ];
 
         // =======================================================
-        //             LÓGICA DO FRETE POR DISTÂNCIA E AUTOCOMPLETE
+        //            LÓGICA DO FRETE POR DISTÂNCIA E AUTOCOMPLETE
         // =======================================================
 
         window.initMap = function() {
@@ -676,8 +704,6 @@
             }
         }
 
-        // 🛑 CORREÇÃO DE ERRO: calculateDeliveryFee precisa estar no escopo global ou ser chamada
-        // internamente pela updateCart. Aqui garantimos a definição correta.
         async function calculateDeliveryFee(destino) {
             return new Promise((resolve, reject) => {
                 if (!window.google || !window.google.maps || !window.google.maps.DistanceMatrixService) {
@@ -724,9 +750,10 @@
         }
         
         // =======================================================
-        //             FUNÇÕES DE CARDÁPIO E MODAL
+        //            FUNÇÕES DE CARRINHO, MODAL E PAGAMENTO
         // =======================================================
-
+        
+        // [Funções de carregar/renderizar cardápio mantidas]
         async function carregarCardapioDoFirebase() {
             const lanchesContainer = document.getElementById('lanches-container');  
             const bebidasContainer = document.getElementById('bebidas-container');  
@@ -837,8 +864,6 @@
                 container.innerHTML += itemHTML;
             });
         }
-
-        // --- Funções de Modal e Carrinho ---
         
         function openModal(lancheId) {
             currentLanche = lanches.find(l => l.id === lancheId);
@@ -999,16 +1024,22 @@
             document.getElementById('payment-summary-block').style.display = 'block';
         }
 
+        /**
+         * @description Copia a chave PIX para o clipboard.
+         */
         function copyPixKey() {
             const pixKeyInput = document.getElementById('pix-key');
             pixKeyInput.select();
             pixKeyInput.setSelectionRange(0, 99999);  
             try {
+                // Tenta usar a API moderna de clipboard
                 navigator.clipboard.writeText(CHAVE_PIX);
                 alert("Chave PIX copiada para a área de transferência! Por favor, faça o pagamento e anexe o comprovante na próxima tela do WhatsApp.");
             } catch (err) {
                 console.error('Erro ao copiar', err);
-                alert("Erro ao copiar a chave. Por favor, copie manualmente: " + CHAVE_PIX);
+                // Fallback para métodos antigos se a API falhar
+                document.execCommand('copy');
+                alert("Chave PIX copiada para a área de transferência! Por favor, faça o pagamento e anexe o comprovante na próxima tela do WhatsApp.");
             }
         }
 
@@ -1101,16 +1132,15 @@
                 const numero = document.getElementById('endereco-numero').value;
                 const bairro = document.getElementById('endereco-bairro').value;
 
-                if (rua && numero && bairro) {
+                if (rua && numero) { // O Bairro é opcional para o cálculo, mas obrigatório para o checkout
                     freteCalculandoMsg.textContent = 'Calculando o frete...';
                     freteCalculandoMsg.style.display = 'block';
                     freteAtual = 0.00; 
                     submitBtn.disabled = true;
 
-                    const enderecoDestino = `${rua}, ${numero}, ${bairro}, CONCHAS, SP`;
+                    const enderecoDestino = `${rua}, ${numero}, ${bairro || ''}, CONCHAS, SP`;
 
                     try {
-                        // 🛑 CHAMA calculateDeliveryFee AGORA ACESSÍVEL GLOBALMENTE
                         const novaTaxa = await calculateDeliveryFee(enderecoDestino);
                         
                         freteAtual = novaTaxa;
@@ -1119,13 +1149,14 @@
 
                     } catch (error) {
                         freteAtual = 0.00;
-                        freteCalculandoMsg.textContent = `⚠️ Erro no frete: ${error.message}`;
+                        let msg = error.message.includes('16km') ? error.message : "Endereço inválido ou fora da área de cobertura.";
+                        freteCalculandoMsg.textContent = `⚠️ Erro no frete: ${msg}`;
                         freteCalculandoMsg.style.display = 'block';
                         submitBtn.disabled = true;
                     }
                 } else {
                     freteAtual = 0.00;
-                    freteCalculandoMsg.textContent = 'Preencha todos os campos (Rua, Nº, Bairro) para calcular o frete.';
+                    freteCalculandoMsg.textContent = 'Preencha Rua e Número para calcular o frete.';
                     freteCalculandoMsg.style.display = 'block';
                     submitBtn.disabled = true;
                 }
@@ -1143,9 +1174,22 @@
                 totalInSummaryElement.textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
             }
 
+            // Garante que o estado do botão seja atualizado
+            if (cart.length === 0) {
+                 submitBtn.disabled = true;
+            } else if (localidade === 'entrega' && submitBtn.disabled) {
+                 // Deixa o disabled como está (calculando ou com erro)
+            } else {
+                 // Reativa se for retirada ou se o cálculo deu certo
+                 submitBtn.disabled = false;
+            }
+
             togglePaymentDetails(document.getElementById('pagamento').value);
         }
         
+        /**
+         * @description Formata a mensagem final para o WhatsApp.
+         */
         function formatWhatsappMessage(pedido, pedidoId = null) {
             let message = `*🍕 NOVO PEDIDO - DONA BAGUETE*\n`;
             if (pedidoId) {
@@ -1253,28 +1297,29 @@
                 pagamento: metodoPagamento,
                 subtotal: subtotal,
                 total: total,
-                status: 'Pendente',  
+                status: 'Pendente',  // Status inicial, será o "novo" para a cozinha
                 hora: new Date().toISOString()  
             };
             
             try {
+                // 1. Envia para o Firebase (para a Cozinha/KDS)
                 const newPedidoRef = await push(pedidosRef, pedidoCompleto);
                 const pedidoId = newPedidoRef.key;
 
+                // 2. Formata e prepara o link do WhatsApp
                 const whatsappMsg = formatWhatsappMessage(pedidoCompleto, pedidoId);
                 const whatsappUrl = `https://wa.me/${WHATSAPP_LOJA}?text=${whatsappMsg}`;
 
                 
-                // Limpa carrinho e formulário, fecha modal
+                // 3. Limpa carrinho e redireciona
                 cart = [];
                 updateCart();
                 closeCart();
                 
-                // Redireciona para o WhatsApp
                 if (pagamentoSelect.value === 'pix') {
-                    alert(`Pedido #ID ${pedidoId.substring(1)} enviado! Você será redirecionado para o WhatsApp. Por favor, *anexe o comprovante PIX* na mensagem!`);
+                    alert(`Pedido #ID ${pedidoId.substring(1)} enviado para a cozinha! Você será redirecionado para o WhatsApp. Por favor, *anexe o comprovante PIX* na mensagem!`);
                 } else {
-                    alert(`Pedido #ID ${pedidoId.substring(1)} enviado! Você será redirecionado para o WhatsApp para confirmação.`);
+                    alert(`Pedido #ID ${pedidoId.substring(1)} enviado para a cozinha! Você será redirecionado para o WhatsApp para confirmação.`);
                 }
                 window.open(whatsappUrl, '_blank');
                 
@@ -1290,7 +1335,7 @@
         });
         
         // =======================================================
-        //             INICIALIZAÇÃO FINAL
+        //            INICIALIZAÇÃO FINAL
         // =======================================================
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -1302,8 +1347,7 @@
             carregarCardapioDoFirebase(); 
         });
 
-        // 🛑 CORREÇÃO FINAL: EXPOSIÇÃO GLOBAL DE TODAS AS FUNÇÕES
-        // Garante que todas as funções sejam acessíveis pelo HTML e por outras funções no módulo.
+        // Exposição Global de Funções (para o HTML)
         window.updateCart = updateCart;
         window.openCart = openCart;
         window.removeFromCart = removeFromCart;
@@ -1320,7 +1364,6 @@
         window.addBebidaToCart = addBebidaToCart;
         window.closeCart = closeCart;
         window.initAutocomplete = initAutocomplete;
-        // 🛑 Adicionado ao escopo global para resolver: calculateDeliveryFee is not defined
         window.calculateDeliveryFee = calculateDeliveryFee; 
     </script>
 </body>
