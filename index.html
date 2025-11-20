@@ -151,9 +151,8 @@
             margin-top: 10px;
         }
         .btn-add:hover { background: #e6b840; }
-        /* --- FIM ESTILOS DE CARDÁPIO --- */
 
-        /* --- ESTILOS DE MODAL --- */
+        /* --- MODAL --- */
         .modal { 
             display: none; 
             position: fixed; 
@@ -194,182 +193,56 @@
             top: 0; 
             z-index: 10; 
         }
-        .modal-title { 
-            font-size: 1.5rem; 
-            font-weight: bold; 
-            color: #d4a021; 
-        }
-        .close-btn { 
-            background: #dc2626; 
-            color: #fff; 
-            border: none; 
-            padding: 10px 20px; 
-            border-radius: 8px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            font-size: 1.1rem; 
-        }
-        .modal-body { 
-            padding: 25px; 
-            flex-grow: 1; 
-        }
-        .modal-footer { 
-            background: #1a202c; 
-            padding: 20px; 
-            border-top: 1px solid #374151; 
-            display: flex; 
-            gap: 10px; 
-            position: sticky; 
-            bottom: 0; 
-            z-index: 10;
-        }
+        .modal-title { font-size: 1.5rem; font-weight: bold; color: #d4a021; }
+        .close-btn { background: #dc2626; color: #fff; border: none; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 1.1rem; }
+        .modal-body { padding: 25px; flex-grow: 1; }
+        .modal-footer { background: #1a202c; padding: 20px; border-top: 1px solid #374151; display: flex; gap: 10px; position: sticky; bottom: 0; z-index: 10; }
 
-        /* Opções e Inputs e Carrinho (Mantidos) */
+        /* Forms e Carrinho */
         .options-section { margin-bottom: 25px; }
         .options-title { font-size: 1.1rem; font-weight: bold; color: #d4a021; margin-bottom: 15px; }
         .option-item { background: #374151; padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; cursor: pointer; transition: all 0.3s; }
-        .option-item:hover { background: #4b5563; }
         .option-item label { cursor: pointer; width: 100%; }
-        .option-item input { width: 20px; height: 20px; cursor: pointer; }
-        .option-label { flex: 1; }
         .option-price { color: #d4a021; font-weight: bold; }
-        textarea, .input-field { width: 100%; background: #374151; color: #fff; border: 2px solid #4b5563; border-radius: 10px; padding: 12px; font-size: 1rem; resize: vertical; font-family: inherit; }
+        textarea, .input-field { width: 100%; background: #374151; color: #fff; border: 2px solid #4b5563; border-radius: 10px; padding: 12px; font-size: 1rem; font-family: inherit; }
         textarea:focus, .input-field:focus { outline: none; border-color: #d4a021; }
         .modal-total { background: #374151; padding: 15px; border-radius: 10px; margin: 20px 0; display: flex; justify-content: space-between; align-items: center; font-size: 1.3rem; }
         .modal-total-price { color: #d4a021; font-weight: bold; }
         
         .confirm-btn { 
             background: linear-gradient(to right, #d4a021, #f7d00b);
-            color: #000;
-            border: none;
-            padding: 15px 20px;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 1.1rem; 
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(212, 160, 33, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            color: #000; border: none; padding: 15px 20px; border-radius: 12px; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: all 0.3s ease;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        .confirm-btn::before {
-            content: "➕";
-            font-size: 1.2em;
-            margin-right: 5px;
-        }
-
-        .cart-item {
-            display: flex;
-            gap: 15px;
-            padding: 10px 0;
-            border-bottom: 1px solid #374151;
-            align-items: center;
-        }
-        
+        .cart-item { display: flex; gap: 15px; padding: 10px 0; border-bottom: 1px solid #374151; align-items: center; }
         .total-row { display: flex; justify-content: space-between; font-size: 1.1rem; padding: 8px 0; }
-        
         #frete-calculando { color: #f7d00b; font-weight: bold; padding: 10px 0; text-align: center; }
         
-        /* --- CORREÇÃO DE LAYOUT DO ENDEREÇO --- */
-        .form-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 15px; 
-        }
-        #endereco-inputs {
-            gap: 20px 15px; 
-        }
-        .input-group { 
-            display: flex; 
-            flex-direction: column; 
-            margin-bottom: 10px; 
-        }
-        .full-width { 
-            grid-column: 1 / -1; 
-            margin-bottom: 10px;
-        }
-        /* --- FIM CORREÇÃO DE LAYOUT DO ENDEREÇO --- */
+        /* Layout do Formulário */
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .input-group { display: flex; flex-direction: column; margin-bottom: 10px; }
+        .full-width { grid-column: 1 / -1; margin-bottom: 10px; }
 
-        /* --- ESTILO APRIMORADO DO BOTÃO FINALIZAR --- */
+        /* Botão Finalizar */
         #btn-enviar-pedido {
-            width: 100%;
-            background: linear-gradient(to right, #10b981, #059669); 
-            color: #fff;
-            border: none;
-            padding: 18px;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 1.2rem; 
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            width: 100%; background: linear-gradient(to right, #10b981, #059669); color: #fff; border: none; padding: 18px; border-radius: 12px; font-weight: bold; font-size: 1.2rem; 
+            cursor: pointer; transition: all 0.3s; margin-top: 20px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); 
+            display: flex; align-items: center; justify-content: center; gap: 10px;
         }
-        #btn-enviar-pedido:hover {
-            background: #059669;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
-        }
-        #btn-enviar-pedido:disabled {
-            background: #4b5563; 
-            color: #9ca3af; 
-            cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
-        }
-        /* --- PIX KEY GROUP --- */
-        .pix-key-group {
-            display: flex;
-            gap: 10px;
-            margin: 10px 0;
-            align-items: stretch;
-        }
-        .pix-key-group input {
-            flex-grow: 1;
-            cursor: default;
-        }
-        .pix-key-group button {
-            background: #d4a021;
-            color: #000;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 10px;
-            font-weight: bold;
-            cursor: pointer;
-            flex-shrink: 0;
-        }
-        .pix-instruction {
-            font-size: 0.9rem;
-            color: #f7d00b;
-            text-align: center;
-            padding: 5px 0;
-        }
+        #btn-enviar-pedido:hover { background: #059669; transform: translateY(-2px); }
+        #btn-enviar-pedido:disabled { background: #4b5563; color: #9ca3af; cursor: not-allowed; transform: none; box-shadow: none; }
+        
+        /* Mercado Pago Style */
+        #btn-enviar-pedido.mp-style { background: linear-gradient(to right, #009ee3, #007eb5); box-shadow: 0 4px 15px rgba(0, 158, 227, 0.4); }
 
+        /* PIX & Footer */
+        .pix-key-group { display: flex; gap: 10px; margin: 10px 0; }
+        .pix-key-group input { flex-grow: 1; }
+        .pix-key-group button { background: #d4a021; border: none; padding: 10px; border-radius: 10px; font-weight: bold; cursor: pointer; }
+        .pix-instruction { font-size: 0.9rem; color: #f7d00b; text-align: center; padding: 5px 0; }
 
-        /* --- ESTILO DO RODAPÉ --- */
-        footer {
-            margin-top: 40px;
-            background: #000;
-            color: #9ca3af;
-            padding: 20px;
-            text-align: center;
-            border-top: 2px solid #d4a021;
-        }
-        footer a {
-            color: #d4a021;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        footer p {
-            margin: 5px 0;
-            font-size: 0.9rem;
-        }
+        footer { margin-top: 40px; background: #000; color: #9ca3af; padding: 20px; text-align: center; border-top: 2px solid #d4a021; }
+        footer a { color: #d4a021; text-decoration: none; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -440,8 +313,7 @@
             <div class="modal-body">
                 <div class="options-section">
                     <div class="options-title">🥤 Sabores Disponíveis</div>
-                    <div id="sabores-container">
-                    </div>
+                    <div id="sabores-container"></div>
                 </div>
                 <div class="options-section">
                     <div class="options-title">📝 Observações</div>
@@ -462,8 +334,7 @@
                 <button class="close-btn" onclick="closeCart()">✕ Fechar</button> 
             </div>
             <div class="modal-body">
-                <div id="cart-items-container">
-                </div>
+                <div id="cart-items-container"></div>
                 <div id="cart-total-section">
                     <div class="total-row">
                         <span>Subtotal</span>
@@ -502,18 +373,19 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="form-grid" id="endereco-inputs" style="display: none;">
                         <div class="input-group full-width">
                             <label for="endereco-bairro">Bairro</label>
-                            <input type="text" id="endereco-bairro" class="input-field" onblur="updateCart()" value="" required>
+                            <input type="text" id="endereco-bairro" class="input-field" onblur="updateCart()">
                         </div>
                         <div class="input-group full-width">
                             <label for="endereco-rua">Rua / Avenida</label>
-                            <input type="text" id="endereco-rua" class="input-field" onblur="updateCart()" onfocus="initAutocomplete()" value="" required>
+                            <input type="text" id="endereco-rua" class="input-field" onblur="updateCart()" onfocus="initAutocomplete()">
                         </div>
                         <div class="input-group">
                             <label for="endereco-numero">Número</label>
-                            <input type="text" id="endereco-numero" class="input-field" onblur="updateCart()" value="" required>
+                            <input type="text" id="endereco-numero" class="input-field" onblur="updateCart()">
                         </div>
                     </div>
                     
@@ -523,9 +395,10 @@
                             <label for="pagamento">Forma de Pagamento</label>
                             <select id="pagamento" class="input-field" onchange="togglePaymentDetails(this.value)" required>
                                 <option value="">Selecione...</option>
-                                <option value="pix">PIX</option>
-                                <option value="credito">Cartão de Crédito</option>
-                                <option value="debito">Cartão de Débito</option>
+                                <option value="mercadopago">⚡ Mercado Pago (Cartão/Pix Seguro)</option>
+                                <option value="pix">PIX (Chave Manual)</option>
+                                <option value="credito">Cartão de Crédito (Maquininha)</option>
+                                <option value="debito">Cartão de Débito (Maquininha)</option>
                                 <option value="dinheiro">Dinheiro</option>
                             </select>
                         </div>
@@ -547,13 +420,17 @@
                                 <button type="button" onclick="copyPixKey()">📋 Copiar Chave</button>
                             </div>
                             <div class="pix-instruction">
-                                ⚠️ Após o pagamento, envie o comprovante pelo WhatsApp
+                                ⚠️ Envie o comprovante pelo WhatsApp após pagar.
                             </div>
+                        </div>
+                        
+                        <div id="mp-info-section" style="display: none; text-align: center; color: #009ee3; margin-bottom: 10px;">
+                            <p>🔒 Você será redirecionado para o Mercado Pago.</p>
                         </div>
                     </div>
                     <button type="submit" id="btn-enviar-pedido" disabled>
-                        <span style="font-size: 1.5rem;">🚀</span> 
-                        FINALIZAR E ENVIAR PEDIDO
+                        <span id="btn-icon" style="font-size: 1.5rem;">🚀</span> 
+                        <span id="btn-text">FINALIZAR E ENVIAR PEDIDO</span>
                     </button>
                 </form>
             </div>
@@ -561,25 +438,16 @@
     </div>
     
     <footer>
-        <p>
-            **Dona Baguete** | CNPJ: 12.345.678/0001-90 
-        </p>
-        <p>
-            📍 Endereço da Loja: Rua Romualdo Albino Balestrin, 35, Cohab III, Conchas/SP
-        </p>
-        <p>
-            📞 Contato: <a href="https://wa.me/5514991718704" target="_blank">(14) 9 9171-8704</a>
-        </p>
+        <p>**Dona Baguete** | CNPJ: 63.062.045/0001-00</p>
+        <p>📍 Rua Romualdo Albino Balestrin, 35, Cohab III, Conchas/SP</p>
+        <p>📞 Contato: <a href="https://wa.me/5514991718704" target="_blank">(14) 9 9171-8704</a></p>
     </footer>
-
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
         import { getDatabase, ref, push, get } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-database.js";
 
-        // =======================================================
-        //            CONFIGURAÇÃO DA LOJA (CONSTANTES)
-        // =======================================================
+        // --- CONFIGURAÇÕES ---
         const firebaseConfig = {
             apiKey: "AIzaSyAQTm3cL26REQloN8AFP28gwsIUzYz73og", 
             authDomain: "dona-baguete-kds.firebaseapp.com",
@@ -593,22 +461,20 @@
         
         const ENDERECO_LOJA = "Rua Romualdo Albino Balestrin, 35, CONCHAS, SP"; 
         const WHATSAPP_LOJA = "5514991718704";
-        const CHAVE_PIX = "14981244230"; // Chave PIX
-        const CIDADE_FILTRO = "Conchas, SP, Brasil";
-        // =======================================================
+        const CHAVE_PIX = "14981244230"; 
+        
+        // !!! TOKEN ATUALIZADO (PRODUÇÃO) !!!
+        const MP_ACCESS_TOKEN = "APP_USR-8330749240295653-111913-1951b73d01505d26dfe09cbe5c858a31-2921373838"; 
+        // ---------------------
 
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
         const pedidosRef = ref(database, 'pedidos'); 
-        
         const lanchesRef = ref(database, 'cardapio/lanches');
         const bebidasRef = ref(database, 'cardapio/bebidas');
 
-        var lanches = []; 
-        var bebidas = [];
-        var cart = [];
-        var currentLanche = null; 
-        var currentBebida = null; 
+        var lanches = []; var bebidas = []; var cart = [];
+        var currentLanche = null; var currentBebida = null; 
         var freteAtual = 0;
         var distanceMatrixService;
         var autocompleteInstance = null;
@@ -620,751 +486,364 @@
         ];
         var remocoes = [
             { id: 'sem-bacon', nome: 'Sem Bacon', ingredienteId: 'bacon' }, { id: 'sem-queijo', nome: 'Sem Queijo', ingredienteId: 'queijo' }, 
-            { id: 'sem-catupiry', nome: 'Sem Catupiry', ingredienteId: 'catupiry' }, { id: 'sem-tomate', nome: 'Sem Vinagrete (Tomate e Cebola)', ingredienteId: 'tomate' }, 
-            { id: 'sem-maionese', nome: 'Sem Maionese', ingredienteId: 'maionese' }, { id: 'sem-repolho-maionese', nome: 'Sem Repolho com Maionese', ingredienteId: 'repolho-maionese' },
+            { id: 'sem-catupiry', nome: 'Sem Catupiry', ingredienteId: 'catupiry' }, { id: 'sem-tomate', nome: 'Sem Vinagrete', ingredienteId: 'tomate' }, 
+            { id: 'sem-maionese', nome: 'Sem Maionese', ingredienteId: 'maionese' }, { id: 'sem-repolho-maionese', nome: 'Sem Repolho c/ Maionese', ingredienteId: 'repolho-maionese' },
             { id: 'sem-rucula', nome: 'Sem Rúcula', ingredienteId: 'rucula' }
         ];
 
-        // =======================================================
-        //            LÓGICA DO FRETE POR DISTÂNCIA E AUTOCOMPLETE
-        // =======================================================
-
-        window.initMap = function() {
-            if (window.google && window.google.maps) {
-               distanceMatrixService = new google.maps.DistanceMatrixService();
-               console.log("Serviço Distance Matrix carregado.");
-            } else {
-               console.error("ERRO: Google Maps API não carregou corretamente. Verifique sua chave e faturamento.");
-            }
-        }
-        
-        window.initAutocomplete = function() {
-            if (autocompleteInstance) return;
-            
-            const inputRua = document.getElementById('endereco-rua');
-            const inputBairro = document.getElementById('endereco-bairro'); 
-            const inputNumero = document.getElementById('endereco-numero');
-            
-            if (window.google && window.google.maps && window.google.maps.places) {
-                autocompleteInstance = new google.maps.places.Autocomplete(inputRua, {
-                    types: ['route', 'street_address'],
-                    componentRestrictions: { country: 'br' },
-                    bounds: new google.maps.LatLngBounds(
-                        new google.maps.LatLng(-23.00, -48.00),
-                        new google.maps.LatLng(-22.50, -47.50)
-                    ),
-                    strictBounds: false
-                });
-
-                autocompleteInstance.addListener('place_changed', function() {
-                    const place = autocompleteInstance.getPlace();
-                    
-                    let street_number = "";
-                    let route = "";
-                    let sublocality = "";
-                    
-                    for (let i = 0; i < place.address_components.length; i++) {
-                        const component = place.address_components[i];
-                        const types = component.types;
-
-                        if (types.includes('street_number')) {
-                            street_number = component.long_name;
-                        } else if (types.includes('route')) {
-                            route = component.long_name;
-                        } 
-                        else if (types.includes('sublocality_level_1') || types.includes('sublocality')) {
-                            sublocality = component.long_name; 
+        // --- MAPS & AUTOCOMPLETE ---
+        window.initMap = function() { if (window.google && window.google.maps) { distanceMatrixService = new google.maps.DistanceMatrixService(); } }
+        window.initAutocomplete = function() { 
+             if (autocompleteInstance) return;
+             const inputRua = document.getElementById('endereco-rua');
+             const inputBairro = document.getElementById('endereco-bairro'); 
+             const inputNumero = document.getElementById('endereco-numero');
+             if (window.google && window.google.maps && window.google.maps.places) {
+                 autocompleteInstance = new google.maps.places.Autocomplete(inputRua, {
+                     types: ['route', 'street_address'], componentRestrictions: { country: 'br' },
+                     bounds: new google.maps.LatLngBounds(new google.maps.LatLng(-23.00, -48.00), new google.maps.LatLng(-22.50, -47.50)), strictBounds: false
+                 });
+                 autocompleteInstance.addListener('place_changed', function() {
+                     const place = autocompleteInstance.getPlace();
+                     let street_number = "", route = "", sublocality = "";
+                     if(place.address_components) {
+                        for (let i = 0; i < place.address_components.length; i++) {
+                            const c = place.address_components[i];
+                            if (c.types.includes('street_number')) street_number = c.long_name;
+                            else if (c.types.includes('route')) route = c.long_name; 
+                            else if (c.types.includes('sublocality_level_1') || c.types.includes('sublocality')) sublocality = c.long_name; 
                         }
-                    }
-                    
-                    setTimeout(() => {
-                        
-                        if (route) {
-                            inputRua.value = route;
-                        } 
-                        else if (place.name) { 
-                            inputRua.value = place.name;
-                        }
-                        
-                        inputNumero.value = street_number;
-                        
-                        if(sublocality) {
-                            inputBairro.value = sublocality; 
-                        }
-                        
-                        inputNumero.focus();
-                        
-                        updateCart(); 
-                        
-                    }, 100); 
-                });
-                console.log("Autocomplete inicializado no campo Rua/Avenida.");
-            } else {
-                console.warn("API Places do Google Maps não está disponível. Autocomplete desativado.");
-            }
+                     }
+                     setTimeout(() => {
+                         if (route) inputRua.value = route; else if (place.name) inputRua.value = place.name;
+                         inputNumero.value = street_number;
+                         if(sublocality) inputBairro.value = sublocality; 
+                         inputNumero.focus();
+                         updateCart(); 
+                     }, 100); 
+                 });
+             }
         }
 
         async function calculateDeliveryFee(destino) {
             return new Promise((resolve, reject) => {
-                if (!window.google || !window.google.maps || !window.google.maps.DistanceMatrixService) {
-                    return reject(new Error("API do Google Maps não carregada."));
-                }
-                
-                if (!distanceMatrixService) {
-                     distanceMatrixService = new google.maps.DistanceMatrixService();
-                }
-
-                distanceMatrixService.getDistanceMatrix(
-                    {
-                        origins: [ENDERECO_LOJA],
-                        destinations: [destino],
-                        travelMode: google.maps.TravelMode.DRIVING,
-                        unitSystem: google.maps.UnitSystem.METRIC,
-                    },
+                if (!window.google || !window.google.maps) return reject(new Error("API Maps Off"));
+                if (!distanceMatrixService) distanceMatrixService = new google.maps.DistanceMatrixService();
+                distanceMatrixService.getDistanceMatrix({ origins: [ENDERECO_LOJA], destinations: [destino], travelMode: google.maps.TravelMode.DRIVING, unitSystem: google.maps.UnitSystem.METRIC },
                     (response, status) => {
-                        if (status !== 'OK' || !response || response.rows[0].elements[0].status !== 'OK') {
-                            console.error("Erro na rota ou endereço inválido:", status);
-                            return reject(new Error(`Endereço inválido ou fora da área de cobertura.`));
-                        }
-                        
-                        const distanceMeters = response.rows[0].elements[0].distance.value;
-                        const distanceKm = distanceMeters / 1000;
-                        
-                        let taxa = 0.00;
-                        
-                        if (distanceKm <= 3) {
-                            taxa = 4.00;
-                        } else if (distanceKm > 3 && distanceKm <= 7) {
-                            taxa = 5.00;
-                        } else if (distanceKm > 7 && distanceKm <= 16) {
-                            taxa = 10.00;
-                        } else {
-                            taxa = 0.00; 
-                            return reject(new Error(`Distância de ${distanceKm.toFixed(1)} km excede o limite de 16km.`));
-                        }
-                        
-                        resolve(taxa);
+                        if (status !== 'OK' || !response || response.rows[0].elements[0].status !== 'OK') return reject(new Error("Endereço não encontrado."));
+                        const km = response.rows[0].elements[0].distance.value / 1000;
+                        if (km <= 3) resolve(4.00); else if (km <= 7) resolve(5.00); else if (km <= 16) resolve(10.00); else reject(new Error("Muito longe."));
                     }
                 );
             });
         }
-        
-        // =======================================================
-        //            FUNÇÕES DE CARRINHO, MODAL E PAGAMENTO
-        // =======================================================
-        
-        // [Funções de carregar/renderizar cardápio mantidas]
+
+        // --- CARDÁPIO ---
         async function carregarCardapioDoFirebase() {
-            const lanchesContainer = document.getElementById('lanches-container');  
-            const bebidasContainer = document.getElementById('bebidas-container');  
-            
-            if (lanchesContainer) lanchesContainer.innerHTML = "<p style='color:white; text-align:center; grid-column: 1 / -1; padding: 20px;'>Carregando lanches...</p>";
-            if (bebidasContainer) bebidasContainer.innerHTML = "<p style='color:white; text-align:center; grid-column: 1 / -1; padding: 20px;'>Carregando bebidas...</p>";
-
             try {
-                const [lanchesSnap, bebidasSnap] = await Promise.all([
-                    get(lanchesRef),
-                    get(bebidasRef)
-                ]);
-
-                const hoje = new Date().getDay();
-                
-                lanches = [];  
-                if (lanchesSnap.exists()) {
-                    lanchesSnap.forEach(child => {
-                        const item = child.val();
-                        if (item.pausado) return;  
-                        if (item.diasEspeciais && item.diasEspeciais.length > 0 && !item.diasEspeciais.includes(hoje)) {
-                             return; 
-                        }
-                        item.id = child.key;  
-                        lanches.push(item);
-                    });
-                }
-                
-                bebidas = [];  
-                if (bebidasSnap.exists()) {
-                    bebidasSnap.forEach(child => {
-                        const item = child.val();
-                        if (item.pausado) return;  
-                        item.id = child.key;  
-                        bebidas.push(item);
-                    });
-                }
-
-                renderizarLanches();
-                renderizarBebidas();
-
-            } catch (error) {
-                console.error("Erro CRÍTICO ao carregar cardápio. Verifique a chave e regras do Firebase:", error);
-                if (lanchesContainer) lanchesContainer.innerHTML = "<p style='color:red; text-align:center; grid-column: 1 / -1; padding: 20px;'>Erro ao carregar o cardápio. Verifique suas regras do Firebase ou a chave da API!</p>";
-            }
+                const [ls, bs] = await Promise.all([get(lanchesRef), get(bebidasRef)]);
+                lanches = []; bebidas = [];
+                if (ls.exists()) ls.forEach(c => { const i=c.val(); if(!i.pausado) { i.id=c.key; lanches.push(i); } });
+                if (bs.exists()) bs.forEach(c => { const i=c.val(); if(!i.pausado) { i.id=c.key; bebidas.push(i); } });
+                renderizarLanches(); renderizarBebidas();
+            } catch(e) { console.error(e); }
         }
-
-        function renderizarLanches() {
-            const container = document.getElementById('lanches-container');
-            container.innerHTML = '';  
-            
-            if (lanches.length === 0) {
-                container.innerHTML = "<p style='color:white; text-align:center; grid-column: 1 / -1; padding: 20px;'>Nenhum lanche disponível no momento.</p>";
-                return;
-            }
-            
-            lanches.forEach(lanche => {
-                const imagemHTML = lanche.imagem ? `<img src="${lanche.imagem}" alt="${lanche.nome}" class="item-img">` : '';
-
-                const itemHTML = `
-                    <div class="menu-item">
-                        ${imagemHTML}  
-                        <div class="item-info">
-                            <span class="nome">${lanche.nome}</span>
-                            <p class="descricao">${lanche.descricao || ''}</p>
-                            <span class="preco">R$ ${Number(lanche.preco).toFixed(2).replace('.', ',')}</span>
-                        </div>
-                        <button class="btn-add" onclick="openModal('${lanche.id}')">Adicionar</button>
-                    </div>
-                `;
-                container.innerHTML += itemHTML;
-            });
+        function renderizarLanches() { 
+            const c = document.getElementById('lanches-container'); c.innerHTML = '';
+            lanches.forEach(l => c.innerHTML += `<div class="menu-item">${l.imagem?`<img src="${l.imagem}" class="item-img">`:''}<div class="item-info"><span class="nome">${l.nome}</span><p class="descricao">${l.descricao||''}</p><span class="preco">R$ ${Number(l.preco).toFixed(2).replace('.',',')}</span></div><button class="btn-add" onclick="openModal('${l.id}')">Adicionar</button></div>`);
         }
-        
         function renderizarBebidas() {
-            const container = document.getElementById('bebidas-container');
-            container.innerHTML = '';  
-            
-            if (bebidas.length === 0) {
-                container.innerHTML = "<p style='color:white; text-align:center; grid-column: 1 / -1; padding: 20px;'>Nenhuma bebida disponível no momento.</p>";
-                return;
-            }
-
-            bebidas.forEach(bebida => {
-                const imagemHTML = bebida.imagem ? `<img src="${bebida.imagem}" alt="${bebida.nome}" class="item-img">` : '';
-                
-                let buttonOnClick;
-                let descricaoHTML = '';
-
-                if (bebida.sabores && bebida.sabores.length > 0) {
-                    buttonOnClick = `openBebidaModal('${bebida.id}')`;
-                    descricaoHTML = `<p class="descricao">Sabores: ${bebida.sabores.join(', ')}</p>`;
-                } else {
-                    buttonOnClick = `addBebidaToCart('${bebida.id}', null)`;
-                    descricaoHTML = `<p class="descricao">${bebida.descricao || ''}</p>`;
-                }
-
-                const itemHTML = `
-                    <div class="menu-item">
-                        ${imagemHTML}  
-                        <div class="item-info">
-                            <span class="nome">${bebida.nome}</span>
-                            ${descricaoHTML} <span class="preco">R$ ${Number(bebida.preco).toFixed(2).replace('.', ',')}</span>
-                        </div>
-                        <button class="btn-add" onclick="${buttonOnClick}">Adicionar</button>
-                    </div>
-                `;
-                container.innerHTML += itemHTML;
+            const c = document.getElementById('bebidas-container'); c.innerHTML = '';
+            bebidas.forEach(b => {
+                const click = b.sabores ? `openBebidaModal('${b.id}')` : `addBebidaToCart('${b.id}', null)`;
+                c.innerHTML += `<div class="menu-item">${b.imagem?`<img src="${b.imagem}" class="item-img">`:''}<div class="item-info"><span class="nome">${b.nome}</span><span class="preco">R$ ${Number(b.preco).toFixed(2).replace('.',',')}</span></div><button class="btn-add" onclick="${click}">Adicionar</button></div>`;
             });
         }
-        
-        function openModal(lancheId) {
-            currentLanche = lanches.find(l => l.id === lancheId);
-            
+
+        // --- FUNÇÕES UI ---
+        window.openModal = (id) => {
+            currentLanche = lanches.find(l => l.id === id);
             document.getElementById('modal-title').textContent = currentLanche.nome;
             document.getElementById('observacao').value = '';
-
-            const queijoSection = document.getElementById('tipo-queijo-section');
-            const lancheTemQueijo = currentLanche.ingredientesBase && currentLanche.ingredientesBase.includes('queijo');
-            
-            if (lancheTemQueijo) {
-                document.getElementById('tipo-queijo-container').innerHTML = `
-                    <div class="option-item"><input type="radio" name="tipo-queijo" value="Prato" id="queijo-prato" checked onclick="updateModalTotal()"><label for="queijo-prato" class="option-label">Queijo Prato</label></div>
-                    <div class="option-item"><input type="radio" name="tipo-queijo" value="Mussarela" id="queijo-mussarela" onclick="updateModalTotal()"><label for="queijo-mussarela" class="option-label">Queijo Mussarela</label></div>
-                `;
-                queijoSection.style.display = 'block';
-            } else {
-                queijoSection.style.display = 'none';
-            }
-            
-            var adicionaisHTML = adicionais.map(ad => `<div class="option-item"><input type="checkbox" class="adicional-check" onchange="updateModalTotal()" data-preco="${ad.preco}" data-nome="${ad.nome}"><span class="option-label">${ad.nome}</span><span class="option-price">+ R$ ${ad.preco.toFixed(2).replace('.', ',')}</span></div>`).join('');
-            document.getElementById('adicionais-container').innerHTML = adicionaisHTML;
-
-            const ingredientesLanche = currentLanche.ingredientesBase || [];
-            const remocoesDisponiveis = remocoes.filter(rem => ingredientesLanche.includes(rem.ingredienteId));
-            const remocoesSection = document.getElementById('remocoes-section');
-            
-            if (remocoesDisponiveis.length > 0) {
-                var removesHTML = remocoesDisponiveis.map(rem => `<div class="option-item"><input type="checkbox" class="remocao-check" data-nome="${rem.nome}"><span class="option-label">${rem.nome}</span></div>`).join('');
-                document.getElementById('remocoes-container').innerHTML = removesHTML;
-                remocoesSection.style.display = 'block';
-            } else {
-                remocoesSection.style.display = 'none';
-            }
-
+            const hasCheese = currentLanche.ingredientesBase && currentLanche.ingredientesBase.includes('queijo');
+            document.getElementById('tipo-queijo-section').style.display = hasCheese ? 'block' : 'none';
+            if(hasCheese) document.getElementById('tipo-queijo-container').innerHTML = `<div class="option-item"><input type="radio" name="tipo-queijo" value="Prato" id="qp" checked onclick="updateModalTotal()"><label for="qp">Queijo Prato</label></div><div class="option-item"><input type="radio" name="tipo-queijo" value="Mussarela" id="qm" onclick="updateModalTotal()"><label for="qm">Queijo Mussarela</label></div>`;
+            document.getElementById('adicionais-container').innerHTML = adicionais.map(a => `<div class="option-item"><input type="checkbox" class="adicional-check" onchange="updateModalTotal()" data-preco="${a.preco}" data-nome="${a.nome}"><span class="option-label">${a.nome}</span><span class="option-price">+ R$ ${a.preco.toFixed(2).replace('.',',')}</span></div>`).join('');
+            const rems = remocoes.filter(r => (currentLanche.ingredientesBase||[]).includes(r.ingredienteId));
+            document.getElementById('remocoes-section').style.display = rems.length > 0 ? 'block' : 'none';
+            document.getElementById('remocoes-container').innerHTML = rems.map(r => `<div class="option-item"><input type="checkbox" class="remocao-check" data-nome="${r.nome}"><span class="option-label">${r.nome}</span></div>`).join('');
             updateModalTotal();
             document.getElementById('modal').classList.add('active');
         }
-
-        function closeModal() {
-            document.getElementById('modal').classList.remove('active');
+        window.closeModal = () => document.getElementById('modal').classList.remove('active');
+        window.updateModalTotal = () => {
+            let t = currentLanche.preco;
+            document.querySelectorAll('.adicional-check:checked').forEach(c => t += parseFloat(c.dataset.preco));
+            document.getElementById('modal-total').textContent = 'R$ ' + t.toFixed(2).replace('.', ',');
         }
-
-        function closeBebidaModal() {
-            document.getElementById('bebida-modal').classList.remove('active');
+        window.addLancheToCart = () => {
+            const ads = Array.from(document.querySelectorAll('.adicional-check:checked')).map(c => ({ nome: c.dataset.nome, preco: parseFloat(c.dataset.preco) }));
+            const rems = Array.from(document.querySelectorAll('.remocao-check:checked')).map(c => ({ nome: c.dataset.nome }));
+            const obs = document.getElementById('observacao').value;
+            const pt = currentLanche.preco + ads.reduce((a,b)=>a+b.preco,0);
+            let q = null; if(document.querySelector('input[name="tipo-queijo"]:checked')) q = document.querySelector('input[name="tipo-queijo"]:checked').value;
+            cart.push({ cartId: Date.now(), tipo: 'lanche', nome: currentLanche.nome, preco: currentLanche.preco, precoTotal: pt, adicionais: ads, remocoes: rems, observacao: obs, queijo: q, quantidade: 1 });
+            closeModal(); updateCart();
         }
-        
-        function openCart() {
-            loadClientData();
-            updateCart();
-            const cartModal = document.getElementById('cart-modal');
-            cartModal.style.display = 'flex';
-            cartModal.classList.add('active');
-            initAutocomplete();
-        }
-
-        function closeCart() {
-            const cartModal = document.getElementById('cart-modal');
-            cartModal.classList.remove('active');
-            
-            setTimeout(() => {
-                cartModal.style.display = 'none'; 
-                console.log("Modal de carrinho fechado, clique liberado.");
-            }, 100); 
-        }
-
-        function updateModalTotal() {
-            var total = currentLanche.preco;
-            document.querySelectorAll('.adicional-check:checked').forEach(check => {
-                total += parseFloat(check.dataset.preco);
-            });
-            document.getElementById('modal-total').textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
-        }
-
-        function addLancheToCart() {
-            const selectedAdicionais = Array.from(document.querySelectorAll('.adicional-check:checked')).map(check => ({ nome: check.dataset.nome, preco: parseFloat(check.dataset.preco) }));
-            const selectedRemocoes = Array.from(document.querySelectorAll('.remocao-check:checked')).map(check => ({ nome: check.dataset.nome }));
-            const observacao = document.getElementById('observacao').value;
-            const precoTotal = currentLanche.preco + selectedAdicionais.reduce((sum, ad) => sum + ad.preco, 0);
-
-            let queijoSelecionado = null;
-            if (document.querySelector('input[name="tipo-queijo"]:checked')) {
-                queijoSelecionado = document.querySelector('input[name="tipo-queijo"]:checked').value;
-            }
-
-            cart.push({
-                cartId: Date.now(),  
-                tipo: 'lanche',
-                nome: currentLanche.nome,
-                preco: currentLanche.preco,
-                precoTotal,
-                adicionais: selectedAdicionais,
-                remocoes: selectedRemocoes,
-                observacao: observacao,
-                queijo: queijoSelecionado,
-                quantidade: 1
-            });
-            
-            closeModal();
-            updateCart();
-        }
-
-        function openBebidaModal(bebidaId) {
-            currentBebida = bebidas.find(b => b.id === bebidaId);
+        window.openBebidaModal = (id) => {
+            currentBebida = bebidas.find(b => b.id === id);
             document.getElementById('bebida-modal-title').textContent = currentBebida.nome;
             document.getElementById('obs-bebida').value = '';
-            
-            const saboresContainer = document.getElementById('sabores-container');
-            saboresContainer.innerHTML = currentBebida.sabores.map((sabor, index) => `
-                <div class="option-item">
-                    <input type="radio" name="sabor-bebida" value="${sabor}" id="sabor-${index}" ${index === 0 ? 'checked' : ''}>
-                    <label for="sabor-${index}" class="option-label">${sabor}</label>
-                </div>
-            `).join('');
-            
+            document.getElementById('sabores-container').innerHTML = currentBebida.sabores.map((s,i) => `<div class="option-item"><input type="radio" name="sabor-bebida" value="${s}" id="s-${i}" ${i===0?'checked':''}><label for="s-${i}">${s}</label></div>`).join('');
             document.getElementById('bebida-modal').classList.add('active');
         }
-
-        function addBebidaFromModal() {
-            const saborSelecionado = document.querySelector('input[name="sabor-bebida"]:checked');
-            if (!saborSelecionado) {
-                alert("Por favor, selecione um sabor.");
-                return;
-            }
-            
-            const sabor = saborSelecionado.value;
-            const observacao = document.getElementById('obs-bebida').value;
-            
-            addBebidaToCart(currentBebida.id, sabor, observacao);
-            
+        window.closeBebidaModal = () => document.getElementById('bebida-modal').classList.remove('active');
+        window.addBebidaFromModal = () => {
+            const s = document.querySelector('input[name="sabor-bebida"]:checked').value;
+            addBebidaToCart(currentBebida.id, s, document.getElementById('obs-bebida').value);
             closeBebidaModal();
         }
-
-        function addBebidaToCart(bebidaId, sabor, observacao = null) {
-            const bebida = bebidas.find(b => b.id === bebidaId);
-            
-            cart.push({
-                cartId: Date.now(),
-                tipo: 'bebida',
-                nome: bebida.nome,  
-                preco: bebida.preco,
-                precoTotal: bebida.preco,
-                quantidade: 1,
-                sabor: sabor,  
-                observacao: observacao  
-            });
+        window.addBebidaToCart = (id, s, obs=null) => {
+            const b = bebidas.find(i => i.id===id);
+            cart.push({ cartId: Date.now(), tipo: 'bebida', nome: b.nome, preco: b.preco, precoTotal: b.preco, quantidade: 1, sabor: s, observacao: obs });
             updateCart();
         }
-
-        function removeFromCart(cartId) {
-            cart = cart.filter(item => item.cartId !== cartId);
-            updateCart();
+        window.removeFromCart = (id) => { cart = cart.filter(c => c.cartId !== id); updateCart(); }
+        window.copyPixKey = () => { navigator.clipboard.writeText(CHAVE_PIX); alert("Chave PIX copiada!"); }
+        
+        window.openCart = () => { loadClientData(); updateCart(); document.getElementById('cart-modal').style.display='flex'; document.getElementById('cart-modal').classList.add('active'); initAutocomplete(); }
+        window.closeCart = () => { document.getElementById('cart-modal').classList.remove('active'); setTimeout(()=>document.getElementById('cart-modal').style.display='none', 100); }
+        
+        window.saveClientData = () => { 
+            localStorage.setItem('db_nome', document.getElementById('cliente-nome').value);
+            localStorage.setItem('db_whats', document.getElementById('cliente-whatsapp').value);
+        }
+        function loadClientData() {
+            if(localStorage.getItem('db_nome')) document.getElementById('cliente-nome').value = localStorage.getItem('db_nome');
+            if(localStorage.getItem('db_whats')) document.getElementById('cliente-whatsapp').value = localStorage.getItem('db_whats');
         }
 
         function togglePaymentDetails(valor) {
             document.getElementById('troco-section').style.display = (valor === 'dinheiro') ? 'flex' : 'none';
             document.getElementById('pix-info-section').style.display = (valor === 'pix') ? 'block' : 'none';
+            const btn = document.getElementById('btn-enviar-pedido');
+            if (valor === 'mercadopago') {
+                document.getElementById('mp-info-section').style.display = 'block';
+                btn.classList.add('mp-style');
+                document.getElementById('btn-icon').textContent = '💳';
+                document.getElementById('btn-text').textContent = 'PAGAR NO MERCADO PAGO';
+            } else {
+                document.getElementById('mp-info-section').style.display = 'none';
+                btn.classList.remove('mp-style');
+                document.getElementById('btn-icon').textContent = '🚀';
+                document.getElementById('btn-text').textContent = 'FINALIZAR E ENVIAR PEDIDO';
+            }
             document.getElementById('payment-summary-block').style.display = 'block';
         }
 
-        /**
-         * @description Copia a chave PIX para o clipboard.
-         */
-        function copyPixKey() {
-            const pixKeyInput = document.getElementById('pix-key');
-            pixKeyInput.select();
-            pixKeyInput.setSelectionRange(0, 99999);  
-            try {
-                // Tenta usar a API moderna de clipboard
-                navigator.clipboard.writeText(CHAVE_PIX);
-                alert("Chave PIX copiada para a área de transferência! Por favor, faça o pagamento e anexe o comprovante na próxima tela do WhatsApp.");
-            } catch (err) {
-                console.error('Erro ao copiar', err);
-                // Fallback para métodos antigos se a API falhar
-                document.execCommand('copy');
-                alert("Chave PIX copiada para a área de transferência! Por favor, faça o pagamento e anexe o comprovante na próxima tela do WhatsApp.");
-            }
-        }
-
-        function saveClientData() {
-            try {
-                const nome = document.getElementById('cliente-nome').value;
-                const whatsapp = document.getElementById('cliente-whatsapp').value;
-                
-                if (nome) {
-                    localStorage.setItem('dona_baguete_cliente_nome', nome);
-                }
-                if (whatsapp) {
-                    localStorage.setItem('dona_baguete_cliente_whatsapp', whatsapp);
-                }
-            } catch (e) {
-                console.error("Erro ao salvar dados do cliente:", e);
-            }
-        }
-
-        function loadClientData() {
-            try {
-                const nome = localStorage.getItem('dona_baguete_cliente_nome');
-                const whatsapp = localStorage.getItem('dona_baguete_cliente_whatsapp');
-                
-                if (nome) {
-                    document.getElementById('cliente-nome').value = nome;
-                }
-                if (whatsapp) {
-                    document.getElementById('cliente-whatsapp').value = whatsapp;
-                }
-            } catch (e) {
-                console.error("Erro ao carregar dados do cliente:", e);
-            }
-        }
-
+        // --- ATUALIZAÇÃO DE CARRINHO (CORRIGIDO PARA RETIRADA) ---
         async function updateCart() {
-            const cartContainer = document.getElementById('cart-items-container');
+            const cDiv = document.getElementById('cart-items-container');
             document.getElementById('cart-count').textContent = cart.length;
             
-            if (cart.length === 0) {
-                cartContainer.innerHTML = "<p style='color:#9ca3af; text-align:center;'>Seu carrinho está vazio.</p>";
-            } else {
-                cartContainer.innerHTML = '';
-                cart.forEach(item => {
-                    let details = '';
-                    let nomeDisplay = item.nome;
-                    
-                    if (item.tipo === 'lanche') {
-                        if (item.queijo) details += `<div>🧀 ${item.queijo}</div>`;
-                        if (item.adicionais && item.adicionais.length > 0) details += `<div>➕ ${item.adicionais.map(ad => ad.nome).join(', ')}</div>`;
-                        if (item.remocoes && item.remocoes.length > 0) details += `<div>➖ ${item.remocoes.map(rem => rem.nome).join(', ')}</div>`;
-                    }
-                    
-                    if (item.tipo === 'bebida') {
-                        if (item.sabor) {
-                            nomeDisplay = `${item.nome} - ${item.sabor}`;
-                        }
-                    }
-                    
-                    if (item.observacao) details += `<div>📝 ${item.observacao}</div>`;
-                    
-                    cartContainer.innerHTML += `
-                        <div class="cart-item">
-                            <div class="cart-item-info">
-                                <div class="cart-item-nome">${item.quantidade}x ${nomeDisplay}</div>
-                                <div class="cart-item-detalhes">${details}</div>
-                            </div>
-                            <div class="cart-item-preco">R$ ${item.precoTotal.toFixed(2).replace('.', ',')}</div>
-                            <button class="cart-item-remove" onclick="removeFromCart(${item.cartId})">✕</button>
-                        </div>
-                    `;
+            if(cart.length===0) cDiv.innerHTML="<p style='color:#9ca3af; text-align:center;'>Carrinho vazio.</p>";
+            else {
+                cDiv.innerHTML = '';
+                cart.forEach(i => {
+                   let d = '';
+                   if(i.tipo==='lanche') { if(i.queijo) d+=`<div>🧀 ${i.queijo}</div>`; if(i.adicionais) d+=`<div>➕ ${i.adicionais.map(a=>a.nome).join(', ')}</div>`; }
+                   if(i.tipo==='bebida' && i.sabor) d+=`<div>Sabor: ${i.sabor}</div>`;
+                   if(i.observacao) d+=`<div>📝 ${i.observacao}</div>`;
+                   cDiv.innerHTML += `<div class="cart-item"><div class="cart-item-info"><div class="cart-item-nome">${i.quantidade}x ${i.nome}</div><div class="cart-item-detalhes">${d}</div></div><div class="cart-item-preco">R$ ${i.precoTotal.toFixed(2).replace('.',',')}</div><button class="cart-item-remove" onclick="removeFromCart(${i.cartId})">✕</button></div>`;
+                });
+            }
+            
+            const loc = document.getElementById('localidade').value;
+            const endDiv = document.getElementById('endereco-inputs');
+            const btn = document.getElementById('btn-enviar-pedido');
+            
+            if(loc === 'retirada' || loc === '' || cart.length === 0) {
+                freteAtual = 0; endDiv.style.display='none'; document.getElementById('frete-calculando').style.display='none'; 
+                btn.disabled = (cart.length===0); // Botão ativo se tiver itens
+            } else if(loc === 'entrega') {
+                endDiv.style.display='grid'; 
+                const rua = document.getElementById('endereco-rua').value;
+                const num = document.getElementById('endereco-numero').value;
+                
+                if(rua && num) {
+                   document.getElementById('frete-calculando').style.display='block';
+                   document.getElementById('frete-calculando').textContent='Calculando frete...';
+                   btn.disabled=true;
+                   try {
+                       freteAtual = await calculateDeliveryFee(`${rua}, ${num}, CONCHAS, SP`);
+                       document.getElementById('frete-calculando').style.display='none';
+                       btn.disabled=false;
+                   } catch(e) {
+                       freteAtual = 0;
+                       document.getElementById('frete-calculando').textContent='Endereço não encontrado ou longe demais.';
+                       btn.disabled=true;
+                   }
+                } else {
+                    freteAtual = 0; btn.disabled=true;
+                    document.getElementById('frete-calculando').style.display='block';
+                    document.getElementById('frete-calculando').textContent='Preencha Rua e Número.';
+                }
+            }
+            
+            let sub = cart.reduce((a,b)=>a+b.precoTotal*b.quantidade,0);
+            document.getElementById('cart-subtotal').textContent='R$ '+sub.toFixed(2).replace('.',',');
+            document.getElementById('cart-taxa').textContent='R$ '+freteAtual.toFixed(2).replace('.',',');
+            document.getElementById('cart-total-in-summary').textContent='R$ '+(sub+freteAtual).toFixed(2).replace('.',',');
+            togglePaymentDetails(document.getElementById('pagamento').value);
+        }
+
+        // --- INTEGRAÇÃO MERCADO PAGO ---
+        async function criarPreferenciaMP(pedido, mensagemZap) {
+            const items = pedido.itens.map(item => {
+                return {
+                    title: item.nome,
+                    quantity: Number(item.quantidade),
+                    currency_id: 'BRL',
+                    unit_price: Number(item.precoTotal)
+                };
+            });
+
+            if (pedido.entrega.taxa > 0) {
+                items.push({
+                    title: 'Taxa de Entrega',
+                    quantity: 1,
+                    currency_id: 'BRL',
+                    unit_price: Number(pedido.entrega.taxa)
                 });
             }
 
-            const localidade = document.getElementById('localidade').value;
-            const enderecoDiv = document.getElementById('endereco-inputs');
-            const freteCalculandoMsg = document.getElementById('frete-calculando');
-            const submitBtn = document.getElementById('btn-enviar-pedido');
-            
-            if (localidade === 'retirada' || localidade === '' || cart.length === 0) {
-                freteAtual = 0.00;
-                enderecoDiv.style.display = 'none';
-                freteCalculandoMsg.style.display = 'none';
-                submitBtn.disabled = (cart.length === 0);
+            const emailCliente = `${pedido.cliente.whatsapp}@pedidodelivery.com`;
+            const linkRetorno = `https://wa.me/${WHATSAPP_LOJA}?text=${mensagemZap}`;
 
-            } else if (localidade === 'entrega') {
-                enderecoDiv.style.display = 'grid';
+            const preferenceData = {
+                items: items,
+                payer: {
+                    name: pedido.cliente.nome,
+                    email: emailCliente,
+                    phone: { area_code: pedido.cliente.whatsapp.substring(0,2), number: Number(pedido.cliente.whatsapp.substring(2)) }
+                },
+                payment_methods: { excluded_payment_types: [{ id: "ticket" }], installments: 1 },
+                back_urls: {
+                    success: linkRetorno,
+                    failure: linkRetorno,
+                    pending: linkRetorno
+                },
+                auto_return: "approved",
+                external_reference: String(Date.now())
+            };
 
-                const rua = document.getElementById('endereco-rua').value;
-                const numero = document.getElementById('endereco-numero').value;
-                const bairro = document.getElementById('endereco-bairro').value;
+            const proxyUrl = "https://corsproxy.io/?";
+            const targetUrl = "https://api.mercadopago.com/checkout/preferences";
 
-                if (rua && numero) { // O Bairro é opcional para o cálculo, mas obrigatório para o checkout
-                    freteCalculandoMsg.textContent = 'Calculando o frete...';
-                    freteCalculandoMsg.style.display = 'block';
-                    freteAtual = 0.00; 
-                    submitBtn.disabled = true;
-
-                    const enderecoDestino = `${rua}, ${numero}, ${bairro || ''}, CONCHAS, SP`;
-
-                    try {
-                        const novaTaxa = await calculateDeliveryFee(enderecoDestino);
-                        
-                        freteAtual = novaTaxa;
-                        freteCalculandoMsg.style.display = 'none';
-                        submitBtn.disabled = (novaTaxa === 0.00); 
-
-                    } catch (error) {
-                        freteAtual = 0.00;
-                        let msg = error.message.includes('16km') ? error.message : "Endereço inválido ou fora da área de cobertura.";
-                        freteCalculandoMsg.textContent = `⚠️ Erro no frete: ${msg}`;
-                        freteCalculandoMsg.style.display = 'block';
-                        submitBtn.disabled = true;
-                    }
-                } else {
-                    freteAtual = 0.00;
-                    freteCalculandoMsg.textContent = 'Preencha Rua e Número para calcular o frete.';
-                    freteCalculandoMsg.style.display = 'block';
-                    submitBtn.disabled = true;
-                }
-            }
-            
-            // Atualiza Totais
-            var subtotal = cart.reduce((sum, item) => sum + item.precoTotal * item.quantidade, 0);
-            var total = subtotal + freteAtual;
-            
-            document.getElementById('cart-subtotal').textContent = 'R$ ' + subtotal.toFixed(2).replace('.', ',');
-            document.getElementById('cart-taxa').textContent = 'R$ ' + freteAtual.toFixed(2).replace('.', ',');
-            
-            const totalInSummaryElement = document.getElementById('cart-total-in-summary');
-            if (totalInSummaryElement) {
-                totalInSummaryElement.textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
-            }
-
-            // Garante que o estado do botão seja atualizado
-            if (cart.length === 0) {
-                 submitBtn.disabled = true;
-            } else if (localidade === 'entrega' && submitBtn.disabled) {
-                 // Deixa o disabled como está (calculando ou com erro)
-            } else {
-                 // Reativa se for retirada ou se o cálculo deu certo
-                 submitBtn.disabled = false;
-            }
-
-            togglePaymentDetails(document.getElementById('pagamento').value);
-        }
-        
-        /**
-         * @description Formata a mensagem final para o WhatsApp.
-         */
-        function formatWhatsappMessage(pedido, pedidoId = null) {
-            let message = `*🍕 NOVO PEDIDO - DONA BAGUETE*\n`;
-            if (pedidoId) {
-                message += `*#ID:* ${pedidoId.substring(1)}\n`;  
-            }
-            message += `*Cliente:* ${pedido.cliente.nome}\n`;
-            message += `*WhatsApp:* ${pedido.cliente.whatsapp}\n\n`;
-
-            message += `*--- ITENS DO PEDIDO (${pedido.itens.length}) ---\n*`;
-            pedido.itens.forEach((item, index) => {
-                const precoDisplay = item.precoTotal.toFixed(2).replace('.', ',');
-                message += `*${index + 1}. ${item.nome.toUpperCase()} (R$ ${precoDisplay})*\n`;
-
-                let detalhes = [];
-                if (item.tipo === 'lanche') {
-                    if (item.queijo) detalhes.push(`Queijo: ${item.queijo}`);
-                    if (item.adicionais && item.adicionais.length > 0) detalhes.push(`+ ${item.adicionais.map(ad => ad.nome).join(', ')}`);
-                    if (item.remocoes && item.remocoes.length > 0) detalhes.push(`- ${item.remocoes.map(rem => rem.nome).join(', ')}`);
-                } else if (item.tipo === 'bebida' && item.sabor) {
-                    detalhes.push(`Sabor: ${item.sabor}`);
-                }
-                if (item.observacao) detalhes.push(`OBS: ${item.observacao}`);
-
-                if (detalhes.length > 0) {
-                    message += `_(${detalhes.join(' | ')})_\n`;
-                }
+            const response = await fetch(proxyUrl + encodeURIComponent(targetUrl), {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${MP_ACCESS_TOKEN}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(preferenceData)
             });
 
-            message += `\n*--- ENTREGA E PAGAMENTO ---\n*`;
-            message += `*Subtotal:* R$ ${pedido.subtotal.toFixed(2).replace('.', ',')}\n`;
-            message += `*Taxa de Entrega:* R$ ${pedido.entrega.taxa.toFixed(2).replace('.', ',')}\n`;
-            message += `*Total Final:* R$ ${pedido.total.toFixed(2).replace('.', ',')}\n`;
-            message += `*Entrega:* ${pedido.entrega.endereco}\n`;
-            message += `*Pagamento:* ${pedido.pagamento}\n`;
-            
-            if (pedido.pagamento.includes('PIX')) {
-                message += `\n_✅ *COMPROVANTE ANEXADO: ANEXAR FOTO DO COMPROVANTE AQUI*_`;
-                message += `\n\n_Chave PIX para conferência: ${CHAVE_PIX}_`;
-            } else {
-                message += `\n_✅ *Aguardando confirmação do pagamento na entrega...*_\n\n`;
-            }
-            
-            message += `\n*Agradecemos a preferência!*`;
-
-            return encodeURIComponent(message);
+            const data = await response.json();
+            if (data.init_point) { return data.init_point; }
+            else { throw new Error("Erro MP"); }
         }
-        
-        const form = document.getElementById('checkout-form');
-        form.addEventListener('submit', async (e) => {
+
+        function formatWhatsappMessage(pedido, pedidoId) {
+            let m = `*🍕 NOVO PEDIDO - DONA BAGUETE*\n*#ID:* ${pedidoId.substring(1)}\n`;
+            m += `*Cliente:* ${pedido.cliente.nome}\n*Tel:* ${pedido.cliente.whatsapp}\n\n`;
+            pedido.itens.forEach((item, i) => {
+               m += `*${i+1}. ${item.nome}*\n`;
+               if(item.observacao) m+= `_Obs: ${item.observacao}_\n`;
+            });
+            m += `\n*Total:* R$ ${pedido.total.toFixed(2).replace('.',',')}\n*Endereço:* ${pedido.entrega.endereco}\n*Pagamento:* ${pedido.pagamento}\n`;
+            return encodeURIComponent(m);
+        }
+
+        document.getElementById('checkout-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const submitBtn = document.getElementById('btn-enviar-pedido');
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Enviando...';
+            const btn = document.getElementById('btn-enviar-pedido');
+            const originalText = document.getElementById('btn-text').textContent;
+            btn.disabled = true; document.getElementById('btn-text').textContent = 'Processando...';
             
-            if (cart.length === 0) {
-                alert('Seu carrinho está vazio!');
-                submitBtn.disabled = false;
-                submitBtn.textContent = '✅ Finalizar e Enviar Pedido';
-                return;
-            }
+            if (cart.length === 0) { alert('Vazio!'); btn.disabled=false; return; }
             
-            const clienteNome = document.getElementById('cliente-nome').value;
-            let clienteWhatsApp = document.getElementById('cliente-whatsapp').value.replace(/\D/g, '');
-            if (clienteWhatsApp.length < 12) {
-                 clienteWhatsApp = "55" + clienteWhatsApp;
-            }
+            const nome = document.getElementById('cliente-nome').value;
+            let whats = document.getElementById('cliente-whatsapp').value.replace(/\D/g, '');
+            if (whats.length < 12) whats = "55" + whats;
             
-            const localidade = document.getElementById('localidade').value;
-            let enderecoCompleto = "Retirada no Local";
-            
-            if (localidade === 'entrega') {
-                const rua = document.getElementById('endereco-rua').value;
-                const numero = document.getElementById('endereco-numero').value;
-                const bairro = document.getElementById('endereco-bairro').value;
-                
-                if (!rua || !numero || !bairro) {
-                    alert('Preencha o endereço completo (Rua, Número e Bairro)!');
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = '✅ Finalizar e Enviar Pedido';
+            const loc = document.getElementById('localidade').value;
+            let endCompleto = "Retirada no Local";
+            // VALIDAÇÃO MANUAL DE ENDEREÇO (Já que removemos o 'required' do HTML)
+            if (loc === 'entrega') {
+                const r = document.getElementById('endereco-rua').value;
+                const n = document.getElementById('endereco-numero').value;
+                const b = document.getElementById('endereco-bairro').value;
+                if(!r || !n || !b) {
+                    alert("Por favor, preencha o endereço completo para entrega.");
+                    btn.disabled=false; document.getElementById('btn-text').textContent = originalText;
                     return;
                 }
-                enderecoCompleto = `Rua: ${rua}, Nº: ${numero} - Bairro: ${bairro}`;
+                endCompleto = `${r}, ${n} - ${b}`;
             }
-
-            const pagamentoSelect = document.getElementById('pagamento');
-            if (pagamentoSelect.value === '') {
-                 alert('Selecione uma forma de pagamento!');
-                 submitBtn.disabled = false;
-                 submitBtn.textContent = '✅ Finalizar e Enviar Pedido';
-                 return;
-            }
-
-            let metodoPagamento = pagamentoSelect.options[pagamentoSelect.selectedIndex].text;
-            if (pagamentoSelect.value === 'dinheiro' && document.getElementById('troco-valor').value) {
-                metodoPagamento += ` (Troco para: R$ ${document.getElementById('troco-valor').value.replace('.', ',')})`;
-            }
-
-            var subtotal = cart.reduce((sum, item) => sum + item.precoTotal * item.quantidade, 0);
-            var total = subtotal + freteAtual;
             
-            const pedidoCompleto = {
-                cliente: { nome: clienteNome, whatsapp: clienteWhatsApp },
+            const pag = document.getElementById('pagamento').value;
+            let pagTexto = document.getElementById('pagamento').options[document.getElementById('pagamento').selectedIndex].text;
+            if(pag==='dinheiro' && document.getElementById('troco-valor').value) pagTexto += ` (Troco: ${document.getElementById('troco-valor').value})`;
+            
+            const pedido = {
+                cliente: { nome: nome, whatsapp: whats },
                 itens: cart,
-                entrega: { tipo: localidade, endereco: enderecoCompleto, taxa: freteAtual },
-                pagamento: metodoPagamento,
-                subtotal: subtotal,
-                total: total,
-                status: 'Pendente',  // Status inicial, será o "novo" para a cozinha
-                hora: new Date().toISOString()  
+                entrega: { tipo: loc, endereco: endCompleto, taxa: freteAtual },
+                pagamento: pagTexto,
+                subtotal: cart.reduce((a,b)=>a+b.precoTotal*b.quantidade,0),
+                total: cart.reduce((a,b)=>a+b.precoTotal*b.quantidade,0) + freteAtual,
+                status: 'Pendente',
+                hora: new Date().toISOString()
             };
             
             try {
-                // 1. Envia para o Firebase (para a Cozinha/KDS)
-                const newPedidoRef = await push(pedidosRef, pedidoCompleto);
-                const pedidoId = newPedidoRef.key;
-
-                // 2. Formata e prepara o link do WhatsApp
-                const whatsappMsg = formatWhatsappMessage(pedidoCompleto, pedidoId);
-                const whatsappUrl = `https://wa.me/${WHATSAPP_LOJA}?text=${whatsappMsg}`;
-
+                const ref = await push(pedidosRef, pedido);
+                const pid = ref.key;
+                const msgZap = formatWhatsappMessage(pedido, pid);
                 
-                // 3. Limpa carrinho e redireciona
-                cart = [];
-                updateCart();
-                closeCart();
-                
-                if (pagamentoSelect.value === 'pix') {
-                    alert(`Pedido #ID ${pedidoId.substring(1)} enviado para a cozinha! Você será redirecionado para o WhatsApp. Por favor, *anexe o comprovante PIX* na mensagem!`);
+                if (pag === 'mercadopago') {
+                    document.getElementById('btn-text').textContent = 'Gerando Link Seguro...';
+                    const link = await criarPreferenciaMP(pedido, msgZap);
+                    cart=[]; updateCart(); closeCart();
+                    window.location.href = link;
                 } else {
-                    alert(`Pedido #ID ${pedidoId.substring(1)} enviado para a cozinha! Você será redirecionado para o WhatsApp para confirmação.`);
+                    window.open(`https://wa.me/${WHATSAPP_LOJA}?text=${msgZap}`, '_blank');
+                    cart=[]; updateCart(); closeCart();
                 }
-                window.open(whatsappUrl, '_blank');
-                
-                submitBtn.disabled = false;
-                submitBtn.textContent = '✅ Finalizar e Enviar Pedido';
-
-            } catch (error) {
-                console.error("Erro ao enviar pedido: ", error);
-                alert('Erro ao enviar pedido. Tente novamente.');
-                submitBtn.disabled = false;
-                submitBtn.textContent = '✅ Finalizar e Enviar Pedido';
+            } catch(err) {
+                console.error(err);
+                alert('Erro! Tente novamente ou pague na entrega.');
+            } finally {
+                btn.disabled = false;
+                document.getElementById('btn-text').textContent = originalText;
             }
         });
-        
-        // =======================================================
-        //            INICIALIZAÇÃO FINAL
-        // =======================================================
 
         document.addEventListener('DOMContentLoaded', () => {
-            const pixKeyInput = document.getElementById('pix-key');
-            if (pixKeyInput) {
-                pixKeyInput.value = CHAVE_PIX;
-            }
-            
-            carregarCardapioDoFirebase(); 
+            if(document.getElementById('pix-key')) document.getElementById('pix-key').value = CHAVE_PIX;
+            carregarCardapioDoFirebase();
         });
-
-        // Exposição Global de Funções (para o HTML)
+        
         window.updateCart = updateCart;
         window.openCart = openCart;
         window.removeFromCart = removeFromCart;
         window.togglePaymentDetails = togglePaymentDetails;
         window.copyPixKey = copyPixKey;
         window.saveClientData = saveClientData;
-        window.openModal = openModal;
-        window.closeModal = closeModal;
-        window.updateModalTotal = updateModalTotal;
-        window.addLancheToCart = addLancheToCart;
-        window.openBebidaModal = openBebidaModal;
-        window.closeBebidaModal = closeBebidaModal;
-        window.addBebidaFromModal = addBebidaFromModal;
-        window.addBebidaToCart = addBebidaToCart;
-        window.closeCart = closeCart;
         window.initAutocomplete = initAutocomplete;
-        window.calculateDeliveryFee = calculateDeliveryFee; 
     </script>
 </body>
 </html>
+
