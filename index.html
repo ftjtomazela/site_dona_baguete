@@ -533,7 +533,7 @@
                     (response, status) => {
                         if (status !== 'OK' || !response || response.rows[0].elements[0].status !== 'OK') return reject(new Error("Endereço não encontrado."));
                         const km = response.rows[0].elements[0].distance.value / 1000;
-                        if (km <= 3) resolve(4.00); else if (km <= 7) resolve(5.00); else if (km <= 16) resolve(10.00); else reject(new Error("Muito longe."));
+                        if (km <= 3) resolve(0.00); else if (km <= 7) resolve(0.00); else if (km <= 16) resolve(10.00); else reject(new Error("Muito longe."));
                     }
                 );
             });
