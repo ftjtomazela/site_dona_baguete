@@ -464,4 +464,29 @@ window.onload = function() {
     }
 };
 
+// --- FUNÇÃO DE BUSCA (FILTRO) ---
+window.filtrarMenu = function() {
+    // 1. Pega o que o cliente digitou e transforma em minúsculo
+    const termo = document.getElementById('search-input').value.toLowerCase();
+    
+    // 2. Pega todos os cartões de lanche/bebida do site
+    const itens = document.querySelectorAll('.menu-item');
+
+    // 3. Verifica um por um
+    itens.forEach(item => {
+        // Tenta achar o nome dentro do card
+        const nomeElement = item.querySelector('.nome');
+        
+        if (nomeElement) {
+            const nome = nomeElement.innerText.toLowerCase();
+            
+            // Se o nome contém o que foi digitado, mostra. Se não, esconde.
+            if (nome.includes(termo)) {
+                item.style.display = 'flex'; // Mantém o layout original
+            } else {
+                item.style.display = 'none'; // Esconde
+            }
+        }
+    });
+}
 
