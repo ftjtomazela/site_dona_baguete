@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dona Baguete - Sistema de Pedidos</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQTm3cL26REQloN8AFP28gwsIUzYz73og&libraries=places,geometry"></script>
+    
+    <style>
+        .loading-spinner { width: 40px; height: 40px; border: 4px solid rgba(247, 208, 11, 0.3); border-top: 4px solid #f7d00b; border-radius: 50%; margin: 0 auto; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulseBorder { 0% { box-shadow: 0 0 0 0 rgba(247, 208, 11, 0.4); } 70% { box-shadow: 0 0 0 10px rgba(247, 208, 11, 0); } 100% { box-shadow: 0 0 0 0 rgba(247, 208, 11, 0); } }
+        @keyframes popIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div class="modal" id="pix-payment-modal">
+        <div class="modal-content" style="max-width: 450px;">
+            <div class="modal-header">
+                <h2 class="modal-title" style="color: #f7d00b;">Pagamento Pix</h2>
+                <button class="close-btn" onclick="closePixCheckout()">✕</button>
+            </div>
+            
+            <div class="modal-body" style="text-align: center; padding: 20px;">
+                <div style="background: rgba(247, 208, 11, 0.1); padding: 10px; border-radius: 8px; margin-bottom: 20px;">
+                    <p style="font-size: 1.5rem; font-weight: bold; color: #f7d00b; margin: 0;" id="pix-timer">10:00</p>
+                    <p style="color: #f7d00b; font-size: 0.8rem; margin: 0;">Tempo restante</p>
+                </div>
+
+                <p style="color: #9ca3af; font-size: 0.9rem; margin-bottom: 5px;">Total a pagar:</p>
+                <p style="font-size: 1.5rem; font-weight: bold; color: #10b981; margin-bottom: 15px;" id="checkout-pix-total">R$ 0,00</p>
+
+                <div style="background: white; padding: 10px; border-radius: 15px; display: inline-block; margin-bottom: 20px;">
+                    <img id="pix-qr-code" src="" alt="QR Code Pix" style="width: 180px; height: 180px; display:block;">
+                </div>
+
+                <div style="text-align: left; margin-bottom: 20px;">
+                    <label style="color: #d4a021; font-weight: bold; font-size: 0.8rem;">PIX COPIA E COLA:</label>
+                    <div style="display:flex; gap: 5px; margin-top: 5px;">
+                        <input type="text" id="pix-payload-input" class="input-field" value="..." readonly style="font-size: 0.8rem; margin:0;">
+                        <button onclick="copyPixPayload()" style="background:#d4a021; border:none; padding:0 15px; border-radius:8px; cursor:pointer; font-weight:bold; color:black;">Copiar</button>
+                    </div>
+                </div>
+
+                <div style="text-align: left; background: #2d3748; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                    <p style="color: #fff; font-size: 0.9rem; line-height: 1.6; margin: 0;">
+                        1. Abra o aplicativo do seu banco.<br>
+                        2. Escolha <b>"Pix Copia e Cola"</b> ou <b>"Ler QR Code"</b>.<br>
+                        3. Cole o código ou escaneie.<br>
+                        4. Confirme o pagamento.
+                    </p>
+                </div>
+
+                <div id="status-agurdando" style="border: 2px dashed #f7d00b; padding: 15px; border-radius: 12px; animation: pulseBorder 2s infinite; background: rgba(0,0,0,0.2);">
+                    <div class="loading-spinner"></div>
+                    <h3 style="color: #f7d00b; margin: 10px 0 5px 0;">Aguardando confirmação...</h3>
+                    <p style="color: #ccc; font-size: 0.85rem; margin: 0;">
+                        O sistema detecta o pagamento automaticamente!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+   <div class="container">
+        <div class="header">
+            <div class="header-info">
+                <h1>Dona Baguete</h1>
+                <p>Delivery em Conchas-SP</p>
+                
+            </div>
+            <button class="header-cart-button" onclick="openCart()">
+                🛒 Pedido (<span id="cart-count">0</span>)
+            </button>
+        </div>
+
+</div>
+    <div id="aviso-fechado" style="display:none; background:#db0007; color:white; text-align:center; padding:15px; margin-bottom:20px; border-radius:12px; font-weight:bold; border: 2px solid #ff4d4d; box-shadow: 0 4px 10px rgba(219, 0, 7, 0.3);">
+            🔴 ESTAMOS FECHADOS NO MOMENTO!
+            <br><span style="font-size:0.9rem; font-weight:normal;">(Horário de funcionamento: 18h às 23h)</span>
+        </div>
+        <div style="margin-bottom: 20px;">
+    <input type="text" id="search-input" onkeyup="filtrarMenu()" placeholder="🔍 O que você procura?" class="input-field" style="border-color: #ffc72c;">
+<div style="width: 100%; 
+            height: 180px; 
+            background-image: url('banner.png'); 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+            border-radius: 15px; 
+            margin-bottom: 25px; 
+            border: 2px solid #333; 
+            position: relative;">
+    
+    <div style="position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, #000); padding: 20px; border-radius: 0 0 15px 15px;">
+        <h2 style="color: white; margin: 0; text-shadow: 2px 2px 4px #000;">Fome de Baguete? 🥖</h2>
+        <p style="color: #ffc72c; margin: 0; font-weight: bold;">O Melhor Lanche de Conchas!!</p>
+    </div>
+</div>
+        <h2 class="menu-section-title">⭐ Mais Vendidos</h2>
+        <div class="menu-container" id="combos-container">
+            <p style='color:white; text-align:center; padding: 20px;'>Carregando destaques...</p>
+        </div>
+
+        <h2 class="menu-section-title">🍔 Nossos Lanches</h2>
+        <div class="menu-container" id="lanches-container">
+            <p style='color:white; text-align:center; padding: 20px;'>Carregando lanches...</p>
+        </div>
+
+        <h2 class="menu-section-title">🥤 Bebidas</h2>
+        <div class="menu-container" id="bebidas-container">
+            <p style='color:white; text-align:center; padding: 20px;'>Carregando bebidas...</p>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="modal-title">Lanche</div>
+                <button class="close-btn" onclick="closeModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div id="tipo-queijo-section" class="options-section" style="display: none;">
+                    <div class="options-title">🧀 Escolha o Queijo</div>
+                    <div id="tipo-queijo-container"></div>
+                </div>
+                <div class="options-section">
+                    <div class="options-title">➕ Adicionais</div>
+                    <div id="adicionais-container"></div>
+                </div>
+                
+                <div class="options-section" id="rem-section" style="display:none;">
+                    <div class="options-title" id="rem-title">➖ Remover Ingredientes</div>
+                    <div id="remocoes-container"></div>
+                </div>
+
+                <div class="options-section">
+                    <div class="options-title">📝 Observações</div>
+                    <textarea id="observacao" rows="3" placeholder="Ex: Sem sal, bem passado..."></textarea>
+                </div>
+                <div class="modal-total">
+                    <span>Total:</span>
+                    <span class="modal-total-price" id="modal-total">R$ 0,00</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeModal()">Cancelar</button>
+                <button class="confirm-btn" onclick="addLancheToCart()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="bebida-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title" id="bebida-modal-title">Bebida</div>
+                <button class="close-btn" onclick="closeBebidaModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="options-section">
+                    <div class="options-title">🥤 Sabor</div>
+                    <div id="sabores-container"></div>
+                </div>
+                <div class="options-section">
+                    <div class="options-title">📝 Obs</div>
+                    <textarea id="obs-bebida" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeBebidaModal()">Cancelar</button>
+                <button class="confirm-btn" onclick="addBebidaFromModal()">Adicionar</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="cart-modal">
+        <div class="modal-content">
+<div class="modal-header">
+    <h2 class="modal-title">🛒 Seu Pedido</h2>
+    <div style="display:flex; gap:10px;">
+        <button onclick="limparCarrinho()" style="background:transparent; border:1px solid #ff4d4d; color:#ff4d4d; padding:5px 10px; border-radius:5px; cursor:pointer; font-size:0.8rem;">Limpar</button>
+        <button class="close-btn" onclick="closeCart()">✕</button>
+    </div>
+</div>
+            <div class="modal-body">
+                <div id="cart-items-container"></div>
+                <div id="cart-total-section">
+                    <div class="total-row"><span>Subtotal</span><span id="cart-subtotal">R$ 0,00</span></div>
+                    <div class="total-row"><span>Taxa de Entrega</span><span id="cart-taxa">R$ 0,00</span></div>
+                    <div id="frete-calculando" style="display: none; color:#f59e0b; font-weight:bold; text-align:center; padding:10px;">Calculando frete...</div>
+                </div>
+                
+                <form id="checkout-form">
+                    <div class="options-title" style="margin-top: 20px;">Seus Dados</div>
+                    <div class="form-grid">
+                        <div class="input-group full-width">
+                            <label>Nome</label>
+                            <input type="text" id="cliente-nome" class="input-field" oninput="saveClientData()" required>
+                        </div>
+                        <div class="input-group full-width">
+                            <label>WhatsApp (com DDD)</label>
+                            <input type="tel" id="cliente-whatsapp" class="input-field" oninput="saveClientData()" required>
+                        </div>
+                    </div>
+
+                    <div class="options-title">Entrega</div>
+                    <div class="form-grid">
+                        <div class="input-group full-width">
+                            <label>Localidade</label>
+                            <select id="localidade" class="input-field" onchange="updateCart()" required>
+                                <option value="">Selecione...</option>
+                                <option value="retirada">Retirada no Local (Grátis)</option>
+                                <option value="entrega">Entrega no Endereço (Será calculado)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid" id="endereco-inputs" style="display: none;">
+                        <div class="input-group full-width">
+                            
+                        <div class="input-group full-width">
+                            <label>Rua / Avenida</label>
+                            <input type="text" id="endereco-rua" class="input-field" onblur="updateCart()" onfocus="initAutocomplete()" placeholder="Digite para buscar...">
+                        </div>
+                        <label>Bairro</label>
+                            <input type="text" id="endereco-bairro" class="input-field" onblur="updateCart()">
+                        </div>
+                        <div class="input-group">
+                            <label>Número</label>
+                            <input type="text" id="endereco-numero" class="input-field" onblur="updateCart()">
+                        </div>
+                    </div>
+                    
+                    <div class="options-title">Pagamento</div>
+                    <div class="form-grid" style="margin-bottom: 25px;">
+                        <div class="input-group full-width">
+                            <label>Forma de Pagamento</label>
+                            <select id="pagamento" class="input-field" onchange="togglePaymentDetails(this.value)" required>
+                                <option value="">Selecione...</option>
+                                <option value="mercadopago">⚡ Mercado Pago (Cartão/Pix Seguro)</option>
+                                <option value="pix">PIX ONLINE</option>
+                                <option value="credito">Cartão de Crédito (Maquininha)</option>
+                                <option value="debito">Cartão de Débito (Maquininha)</option>
+                                <option value="dinheiro">Dinheiro</option>
+                            </select>
+                        </div>
+                        <div class="input-group" id="troco-section" style="display: none;">
+                            <label>Troco para quanto?</label>
+                            <input type="text" id="troco-valor" class="input-field" placeholder="Ex: 50">
+                        </div>
+                    </div>
+
+                    <div id="payment-summary-block">
+                        <div id="cart-total-display" class="modal-total" style="background:#2d3748; padding:15px; border-radius:10px;">
+                            <span class="total-label">TOTAL FINAL:</span>
+                            <span class="total-price" id="cart-total-in-summary" style="color:#10b981;">R$ 0,00</span>
+                        </div>
+
+                        <div id="pix-info-section" style="display: none; margin-top:10px;">
+                            <div class="pix-key-group">
+                                <input type="text" id="pix-key" class="input-field" value="" readonly>
+                                <button type="button" onclick="copyPixPayload()">Copiar</button>
+                            </div>
+                            <div class="pix-instruction">⚠️ Envie o comprovante pelo WhatsApp.</div>
+                        </div>
+                        
+                        <div id="mp-info-section" style="display: none; text-align: center; color: #009ee3; margin: 10px 0;">
+                            <p>🔒 Você será redirecionado para o Mercado Pago.</p>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" id="btn-submit-order" disabled style="margin-top:20px;">
+    <span id="btn-icon" style="font-size: 1.5rem;">🚀</span>
+    <span id="btn-text">FINALIZAR PEDIDO</span>
+</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="success-modal">
+        <div class="modal-content" style="max-width: 400px; text-align: center; background: linear-gradient(145deg, #1e293b, #0f172a); border: 2px solid #10b981;">
+            <div style="padding: 40px 20px;">
+                <div style="font-size: 5rem; margin-bottom: 15px; animation: popIn 0.5s;">🎉</div>
+                <h2 style="color: #10b981; margin-bottom: 10px;">Pedido Confirmado!</h2>
+                <p style="color: #fff; margin-bottom: 10px;">Obrigado pela preferência!</p>
+                <div style="margin-top: 30px;">
+                    <button class="confirm-btn" onclick="closeSuccessModal()" style="width: 100%;">FECHAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>**Dona Baguete** | CNPJ: 63.062.045/0001-00</p>
+        <p>📍 Rua Romualdo Albino Balestrin, 35, Cohab III, Conchas/SP</p>
+        <p>📞 Contato: <a href="https://wa.me/5514991718704" target="_blank">(14) 9 9171-8704</a></p>
+    </footer>
+    
+    <script type="module" src="script.js"></script>
+
+</body>
+</html>
