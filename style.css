@@ -123,12 +123,12 @@ body {
 
 .item-img {
     width: 100%;
-    height: 180px; /* Altura fixa para todos os cards ficarem iguais */
+    height: 180px;
     border-radius: 15px;
-    object-fit: contain; /* Isso garante que a imagem inteira apareça sem cortes */
+    /* 'cover' faz a imagem cobrir todo o espaço sem distorcer */
+    object-fit: cover;
     margin-bottom: 15px;
-    background: #000; /* Fundo preto para preencher espaços vazios */
-    padding: 5px; /* Um pequeno respiro para a imagem não colar na borda */
+    /* Removemos o fundo preto e o padding, pois a imagem vai cobrir tudo agora */
 }
 
 .item-info {
